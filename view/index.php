@@ -1,13 +1,61 @@
-<!DOCTYPE html>
+<?php 
+//Para evitar la muestra de errores
+error_reporting(0);
+//Inicia la sesión del usuario
+session_start();
+//Valida si existe un usuario en sesión lo manda al home.
+if ($_SESSION['username']) {
+  header('Location: MainMenu.php');
+}
+//Importa el controlador y el modelo de usuarios
+include("../control/ctrUser.php");
+include("../model/UserModel.php");
+include("../control/ctrConnection.php");
+
+$username = "";
+$password = "";
+try {
+  //Valida que el botón contenga el valor necesario para validar usuario y contraseña
+  if ($_POST["login"] == "login") {
+    //Recibe los valores del HTTP Post
+    $password = $_POST["password"];
+    $username = $_POST["username"];
+    //Envía usuario y contraseña al modelo de usuario
+    $objUserModel = new UserModel(null, $username, $password);
+    $ctrUser = new ctrUser($objUserModel);
+    //Validar usuario
+    $ctrUser->validate_user();
+    //Obtiene los valores de los campos
+    $USERNAME = $objUserModel->getName();
+    $PASSWORD = $objUserModel->getPassword();
+    //Valida que los valores coincidad exactamente para ingresar
+    $username === $USERNAME ? $username = $USERNAME : $username = null;
+    $password === $PASSWORD ? $password = $PASSWORD : $password = null;
+    //Valida si el usuario y la contraseñas son diferentes de nulo y vacío
+    if ((isset($username) && (!empty($username))) && ((!empty($password)) && (isset($password)))) {
+      //Agrega al array de sesión el usuario y la contraseña
+      $_SESSION["username"] = $username;
+      $_SESSION["password"] = $password;
+      //Envía al usuario a home de la aplicación
+      header('Location: MainMenu.php');
+    } else {
+      //Muestra un mensaje de error en caso que no cumpla las condiciones anteriores
+      echo "<center> <h1>DATOS INVALIDOS.</h1><br><br></center>";
+    }
+  }
+} catch (Exception $exp) {
+  echo "ERROR ....R " . $exp->getMessage() . "\n";
+}
+?>
 <html lang="en">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta username="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="msapplication-tap-highlight" content="no">
-  <meta name="description" content="">
-  <title>Log In - Admin</title>
+  <meta username="msapplication-tap-highlight" content="no">
+  <meta username="description" content="">
+  <title>Iniciar sesión - JAC</title>
   <link href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css" rel="stylesheet">
   <link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/jqvmap.css?7221760363237152919" rel="stylesheet">
   <link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/flag-icon.min.css?7221760363237152919" rel="stylesheet">
@@ -18,11 +66,11 @@
   <!-- Material Icons-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/17758583/digital_wallets/dialog">
-  <meta name="shopify-checkout-api-token" content="6aacc581eb2b41d74f03c38d3c985dba">
+  <meta id="shopify-digital-wallet" username="shopify-digital-wallet" content="/17758583/digital_wallets/dialog">
+  <meta username="shopify-checkout-api-token" content="6aacc581eb2b41d74f03c38d3c985dba">
   <meta id="in-context-paypal-metadata" data-shop-id="17758583" data-environment="production" data-locale="en_US"
     data-paypal-v4="true" data-currency="USD">
-  <style media="all">.additional-checkout-button{border:0 !important;border-radius:5px !important;display:inline-block;margin:0 0 10px;padding:0 24px !important;max-width:100%;min-width:150px !important;line-height:44px !important;text-align:center !important}.additional-checkout-button+.additional-checkout-button{margin-left:10px}.additional-checkout-button:last-child{margin-bottom:0}.additional-checkout-button span{font-size:14px !important}.additional-checkout-button img{display:inline-block !important;height:1.3em !important;margin:0 !important;vertical-align:middle !important;width:auto !important}@media (max-width: 500px){.additional-checkout-button{display:block;margin-left:0 !important;padding:0 10px !important;width:100%}}.additional-checkout-button--apple-pay{background-color:#000 !important;color:#fff !important;display:none;font-family:-apple-system, Helvetica Neue, sans-serif !important;min-width:150px !important;white-space:nowrap !important}.additional-checkout-button--apple-pay:hover,.additional-checkout-button--apple-pay:active,.additional-checkout-button--apple-pay:visited{color:#fff !important;text-decoration:none !important}.additional-checkout-button--apple-pay .additional-checkout-button__logo{background:-webkit-named-image(apple-pay-logo-white) center center no-repeat !important;background-size:auto 100% !important;display:inline-block !important;vertical-align:middle !important;width:3em !important;height:1.3em !important}@media (max-width: 500px){.additional-checkout-button--apple-pay{display:none}}.additional-checkout-button--google-pay{line-height:0 !important;padding:0 !important;border-radius:unset !important;width:80px !important}@media (max-width: 500px){.additional-checkout-button--google-pay{width:100% !important}}.gpay-iframe{height:44px !important;width:100%  !important;cursor:pointer;vertical-align:middle !important}.additional-checkout-button--paypal-express{background-color:#ffc439 !important}.additional-checkout-button--paypal,.additional-checkout-button--venmo{vertical-align:top;line-height:0 !important;padding:0 !important}.additional-checkout-button--amazon{background-color:#fad676 !important;position:relative !important}.additional-checkout-button--amazon .additional-checkout-button__logo{-webkit-transform:translateY(4px) !important;transform:translateY(4px) !important}.additional-checkout-button--amazon .alt-payment-list-amazon-button-image{max-height:none !important;opacity:0 !important;position:absolute !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important}.additional-checkout-button-visually-hidden{border:0 !important;clip:rect(0, 0, 0, 0) !important;clip:rect(0 0 0 0) !important;width:1px !important;height:1px !important;margin:-2px !important;overflow:hidden !important;padding:0 !important;position:absolute !important}
+  <style media="all">.additional-checkout-button{border:0 !important;border-radius:5px !important;display:inline-block;margin:0 0 10px;padding:0 24px !important;max-width:100%;min-width:150px !important;line-height:44px !important;text-align:center !important}.additional-checkout-button+.additional-checkout-button{margin-left:10px}.additional-checkout-button:last-child{margin-bottom:0}.additional-checkout-button span{font-size:14px !important}.additional-checkout-button img{display:inline-block !important;height:1.3em !important;margin:0 !important;vertical-align:middle !important;width:auto !important}@media (max-width: 500px){.additional-checkout-button{display:block;margin-left:0 !important;padding:0 10px !important;width:100%}}.additional-checkout-button--apple-pay{background-color:#000 !important;color:#fff !important;display:none;font-family:-apple-system, Helvetica Neue, sans-serif !important;min-width:150px !important;white-space:nowrap !important}.additional-checkout-button--apple-pay:hover,.additional-checkout-button--apple-pay:active,.additional-checkout-button--apple-pay:visited{color:#fff !important;text-decoration:none !important}.additional-checkout-button--apple-pay .additional-checkout-button__logo{background:-webkit-usernamed-image(apple-pay-logo-white) center center no-repeat !important;background-size:auto 100% !important;display:inline-block !important;vertical-align:middle !important;width:3em !important;height:1.3em !important}@media (max-width: 500px){.additional-checkout-button--apple-pay{display:none}}.additional-checkout-button--google-pay{line-height:0 !important;padding:0 !important;border-radius:unset !important;width:80px !important}@media (max-width: 500px){.additional-checkout-button--google-pay{width:100% !important}}.gpay-iframe{height:44px !important;width:100%  !important;cursor:pointer;vertical-align:middle !important}.additional-checkout-button--paypal-express{background-color:#ffc439 !important}.additional-checkout-button--paypal,.additional-checkout-button--venmo{vertical-align:top;line-height:0 !important;padding:0 !important}.additional-checkout-button--amazon{background-color:#fad676 !important;position:relative !important}.additional-checkout-button--amazon .additional-checkout-button__logo{-webkit-transform:translateY(4px) !important;transform:translateY(4px) !important}.additional-checkout-button--amazon .alt-payment-list-amazon-button-image{max-height:none !important;opacity:0 !important;position:absolute !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important}.additional-checkout-button-visually-hidden{border:0 !important;clip:rect(0, 0, 0, 0) !important;clip:rect(0 0 0 0) !important;width:1px !important;height:1px !important;margin:-2px !important;overflow:hidden !important;padding:0 !important;position:absolute !important}
 </style>
   <style>.shopify-payment-button__button--hidden {
   visibility: hidden;
@@ -91,12 +139,12 @@
   flex-direction: column !important;
 }
 </style>
-  <script id="apple-pay-shop-capabilities" type="application/json">{"shopId":17758583,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/17758583","merchantName":"Materialize Themes","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover"],"total":{"type":"pending","label":"Materialize Themes","amount":"1.00"}}</script>
+  <script id="apple-pay-shop-capabilities" type="application/json">{"shopId":17758583,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/17758583","merchantusername":"Materialize Themes","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover"],"total":{"type":"pending","label":"Materialize Themes","amount":"1.00"}}</script>
   <script id="shopify-features" type="application/json">{"accessToken":"6aacc581eb2b41d74f03c38d3c985dba","betas":[],"domain":"themes.materializecss.com","shopId":17758583,"smart_payment_buttons_url":"https:\/\/cdn.shopifycloud.com\/payment-sheet\/assets\/latest\/spb.js"}</script>
   <script>var Shopify = Shopify || {};
     Shopify.shop = "materialize-themes.myshopify.com";
     Shopify.currency = { "active": "USD" };
-    Shopify.theme = { "name": "debut", "id": 133945025, "theme_store_id": 796, "role": "main" };
+    Shopify.theme = { "username": "debut", "id": 133945025, "theme_store_id": 796, "role": "main" };
     Shopify.theme.handle = "null";
     Shopify.theme.style = { "id": null, "handle": null };</script>
   <script>window.ShopifyPay = window.ShopifyPay || {};
@@ -169,11 +217,11 @@
         };
         script.async = true;
         script.src = 'https://cdn.shopify.com/s/javascripts/tricorder/trekkie.storefront.min.js?v=2017.09.05.1';
-        var first = document.getElementsByTagName('script')[0];
+        var first = document.getElementsByTagusername('script')[0];
         first.parentNode.insertBefore(script, first);
       };
       trekkie.load(
-        { "Trekkie": { "appName": "storefront", "development": false, "defaultAttributes": { "shopId": 17758583, "isMerchantRequest": null, "themeId": 133945025, "themeCityHash": 11956486666485001981 } }, "Performance": { "navigationTimingApiMeasurementsEnabled": true, "navigationTimingApiMeasurementsSampleRate": 1.0 }, "Google Analytics": { "trackingId": "UA-56218128-1", "domain": "auto", "siteSpeedSampleRate": "10", "enhancedEcommerce": true, "doubleClick": true, "includeSearch": true }, "Session Attribution": {} }
+        { "Trekkie": { "appusername": "storefront", "development": false, "defaultAttributes": { "shopId": 17758583, "isMerchantRequest": null, "themeId": 133945025, "themeCityHash": 11956486666485001981 } }, "Performance": { "navigationTimingApiMeasurementsEnabled": true, "navigationTimingApiMeasurementsSampleRate": 1.0 }, "Google Analytics": { "trackingId": "UA-56218128-1", "domain": "auto", "siteSpeedSampleRate": "10", "enhancedEcommerce": true, "doubleClick": true, "includeSearch": true }, "Session Attribution": {} }
       );
 
       var loaded = false;
@@ -236,7 +284,7 @@
       var eventsListenerScript = document.createElement('script');
       eventsListenerScript.async = true;
       eventsListenerScript.src = "//cdn.shopify.com/s/assets/shop_events_listener-76ce6d7f3e50d4b8c05874c34d2ea1340c45e5babba61276dadcaeed488ca16a.js";
-      document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);
+      document.getElementsByTagusername('head')[0].appendChild(eventsListenerScript);
 
     })();</script>
   <script crossorigin="anonymous" defer="defer" src="//cdn.shopify.com/s/assets/shopify_pay/storefront-fe31d6a6f8b299bf1d018618c066f4704f961ac0b1939d90d804f157451c6312.js?v=20181030"></script>
@@ -257,22 +305,22 @@
 
           <div class="card card-login">
             <div class="card-login-splash">
-              <img src="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/geometric-cave.jpg?7221760363237152919" alt="">
+              <img src="../Util/images/puerta-del-sol.jpg" width="50%" height="50%">
             </div>
             <div class="card-content">
-              <span class="card-title">Log In</span>
-              <form>
+              <span class="card-title">Iniciar sesión</span>
+              <form action="index.php" method="POST">
                 <div class="input-field">
-                  <input id="username" type="text" class="validate">
+                  <input id="username" type="text" name="username" class="validate" autocomplete="off" autofocus>
                   <label for="username">Usuario</label>
                 </div>
                 <div class="input-field">
-                  <input id="password" type="password" class="validate">
+                  <input id="password" type="password" name="password" class="validate" autocomplete="off" autofocus>
                   <label for="password">Contraseña</label>
                 </div>
-                <div>
-                  <input class="btn right" name="login" type="submit" value="Ingresar">
-                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="login" value="login">Ingresar
+                  <i class="material-icons right">send</i>
+                </button>
               </form>
             </div>
           </div>

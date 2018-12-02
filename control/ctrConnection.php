@@ -1,5 +1,5 @@
-<?
-class CtrConnection
+<?php
+class ctrConnection
 {
 	var $link;
 	function connect($server, $db, $user, $password)
