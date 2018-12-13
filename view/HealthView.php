@@ -12,7 +12,7 @@ if($_POST['edit'] == 'edit'){
   $code = $_POST['code'];
   $company = $_POST['company'];
 }
-//Listar áreas
+//Listar entidades de salud
 $oHealth = new HealthModel(null, null);
 $oCtrHealth = new ctrHealth($oHealth);
 $health = $oCtrHealth->health_list();
@@ -293,10 +293,10 @@ echo "
                       <td>
                         <input name='code' value='".$health[$i][1]."' type='text' hidden>
                         <input name='company' value='".$health[$i][2]."' type='text' hidden>
-                        <button class='btn waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
+                        <button title='Editar' class='btn waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
                           <i class='material-icons'>edit</i>
                         </button>
-                        <button class='btn waves-effect waves-light red' type='submit' value='delete' name='delete'>
+                        <button title='Eliminar' class='btn waves-effect waves-light red' type='submit' value='delete' name='delete'>
                           <i class='material-icons'>delete</i>
                         </button>
                       </td>
