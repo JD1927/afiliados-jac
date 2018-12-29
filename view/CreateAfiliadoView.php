@@ -1,50 +1,65 @@
 <?php
 error_reporting(0);
 //Incluye código 
-include("../model/TalentModel.php");
-include("../control/ctrTalent.php");
+include("../model/PersonModel.php");
+include("../control/ctrPerson.php");
+include("../model/HealthModel.php");
+include("../control/ctrHealth.php");
+include("../model/CommitteeModel.php");
+include("../control/ctrCommittee.php");
 include("../control/ctrConnection.php");
 //Variables
-$code = "";
-$description = "";
 
-if($_POST['edit'] == 'edit'){
-  $code = $_POST['code'];
-  $description = $_POST['description'];
-}
-//Listar ocupaciones
-$oTalent = new TalentModel(null, null);
-$oCtrTalent = new ctrTalent($oTalent);
-$talent = $oCtrTalent->talent_list();
-$t_lenght = count($talent);
+//Listar comités
+$oCommittee = new CommitteeModel(null, null);
+$oCtrCommittee = new ctrCommittee($oCommittee);
+$committe = $oCtrCommittee->committee_list();
+$c_lenght = count($committe);
+
+//Listar entidades de salud
+$oHealth = new HealthModel(null, null);
+$oCtrHealth = new ctrHealth($oHealth);
+$health = $oCtrHealth->health_list();
+$h_lenght = count($health);
+
+
   //create
 if ($_POST["create"] == "create") {
   try {
     //setting values
-    $description = $_POST['description'];
-    $oTalent = new TalentModel(null, $description);
-    $oCtrTalent = new ctrTalent($oTalent);
+    $id = $_POST['id'];
+    $id_type = $_POST['id_type'];
+    $fullname = $_POST['fullname'];
+    $birth_date = $_POST['birth_date'];
+    $address = $_POST['address'];
+    $email = $_POST['email'];
+    $cod_gender = $_POST['cod_gender'];
+    $cod_health = $_POST['cod_health'];
+    $cod_thealth = $_POST['cod_thealth'];
+    $cod_committee = $_POST['cod_committee'];
+    $cod_knowledge = $_POST['cod_knowledge'];
 
-    $oCtrTalent->create();
+    $oPerson = new PersonModel($id,$id_type,$fullname,1,$birth_date,$address,
+		$email,$cod_gender,$cod_health,	$cod_thealth,	$cod_committee,$cod_knowledge,null);
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oCtrPerson->create();
     //Esta variable se usa para mostrar un mensaje de alerta
     echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    //Vacia los variables correspondientes al área
-    $description = "";
-    $talent = $oCtrTalent->talent_list();
-    $t_lenght = count($talent);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
 }
   //update
-if ($_POST["update"] == "update") {
+/* if ($_POST["update"] == "update") {
   try {
     //setting values
     $code = $_POST['code'];
     $description = $_POST['description'];
-    $oTalent = new TalentModel($code, $description);
-    $oCtrTalent = new ctrTalent($oTalent);
-    if ($oCtrTalent->update()) {
+    $oPerson = new PersonModel($id,$id_type,$fullname,$cod_tper,$birth_date,$address,
+		$email,$cod_gender,$cod_health,	$cod_thealth,	$cod_committee,$cod_knowledge,null);
+    $oCtrPerson = new ctrPerson($oPerson);
+    if ($oCtrPerson->update()) {
       echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
     } else {
       echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
@@ -53,27 +68,28 @@ if ($_POST["update"] == "update") {
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
-}
+} */
   //delete
-if ($_POST['delete'] == 'delete') {
+/* if ($_POST['delete'] == 'delete') {
   try {
 
     $code = $_POST['code'];
-    $oTalent = new TalentModel($code, null);
-    $oCtrTalent = new ctrTalent($oTalent);
+    $oPerson = new PersonModel($id,$id_type,$fullname,$cod_tper,$birth_date,$address,
+		$email,$cod_gender,$cod_health,	$cod_thealth,	$cod_committee,$cod_knowledge,null);
+    $oCtrPerson = new ctrPerson($oPerson);
 
-    if ($oCtrTalent->delete()) {
+    if ($oCtrPerson->delete()) {
       echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
     } else {
       echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
     }
-    $talent = $oCtrTalent->talent_list();
+    $talent = $oCtrPerson->person_list();
     $t_lenght = count($talent);
 
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
-}
+} */
 echo "
 <!DOCTYPE html>
 <html lang='es'>
@@ -84,7 +100,7 @@ echo "
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <meta name='msapplication-tap-highlight' content='no'>
   <meta name='description' content=''>
-  <title>Talento - JAC</title>
+  <title>Afiliado - JAC</title>
   <link href='https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css' rel='stylesheet'>
   <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/jqvmap.css?7221760363237152919' rel='stylesheet'>
   <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/flag-icon.min.css?7221760363237152919' rel='stylesheet'>
@@ -212,7 +228,7 @@ echo "
   <header>
     <div class='navbar-fixed'>
       <nav class='navbar white'>
-        <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Talento</a>
+        <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Afiliado</a>
           <ul id='nav-mobile' class='right'>
             <li class='hide-on-med-and-down'>
               <a class='dropdown-trigger waves-effect' href='#' data-target='people'>Personas</a>
@@ -252,84 +268,119 @@ echo "
   <main>
     <div class='container'>
       <br>
-      <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
-        <br>";
-  if($_POST['edit'] !== 'edit'){
-  echo "<div class='row'>
-          <form id='talent' name='create' action='TalentView.php' method='POST'>
+      <div class='card card-metrics card-metrics-toggle card-metrics-centered'><br>
+      <h4 style='text-align:center'>Nuevo Afiliado</h4><br>
+        <div class='row'>
+          <form class='col s12' action='CreateAfiliadoView.php' method='POST'>
+
             <div class='row'>
-              <div class='input-field col s6 m7'>
-                <i class='material-icons prefix'>palette</i>
-                <input id='icon_prefix' name='description' type='text' class='validate' autocomplete='off'>
-                <label for='icon_prefix'>Talento</label>
+              <div class='input-field col s6'>
+                <input id='id' name='id' type='text' class='validate' autocomplete='off'>
+                <label for='id'>Número Identificación</label>
               </div>
-              <div class='input-field col s6 m5'>
-                <button class='btn waves-effect waves-light blue darken-4' type='submit' value='create' name='create'>Crear
-                  <i class='material-icons right'>add_circle</i>
-                </button>
+              <div class='input-field col s6'>
+                  <select name='id_type'>
+                    <option value='' disabled selected>Elije una opción</option>";
+              echo "<option value='1'>CÉDULA DE CIUDADANÍA</option>";
+              echo "<option value='2'>TARJETA DE IDENTIDAD</option>";
+              echo "<option value='3'>REGISTRO CIVIL</option>";
+              echo "<option value='4'>CÉDULA DE EXTRANJERÍA</option>";
+            echo "</select>
+                  <label>Tipo de Identificación</label>
               </div>
             </div>
-          </form>
-        </div>";
-  }
-  if($_POST['edit'] !== 'edit'){
-    echo "<div class='row'>
-          <table class='striped bordered responsive-table centered'>
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Talento</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>";
 
-              if ($t_lenght > 0) {
-                for ($i=0; $i < $t_lenght; $i++) { 
-                  echo "
-                  <tr>
-                    <form id='talent' name='create' action='TalentView.php' method='POST'>
-                      <td>". $talent[$i][1] ."</td>
-                      <td>". $talent[$i][2] ."</td>
-                      <td>
-                        <input name='code' value='".$talent[$i][1]."' type='text' hidden>
-                        <input name='description' value='".$talent[$i][2]."' type='text' hidden>
-                        <button title='Editar' class='btn waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
-                          <i class='material-icons'>edit</i>
-                        </button>
-                        <button title='Eliminar' class='btn waves-effect waves-light red' type='submit' value='delete' name='delete'>
-                          <i class='material-icons'>delete</i>
-                        </button>
-                      </td>
-                    </form>
-                  </tr>";
-                }
-              }
-
-            echo "</tbody>
-          </table>
-        </div>"; 
-  }else{
-    echo "<div class='row'>
-            <form id='talent' action='TalentView.php' method='POST'>
-              <div class='row'>
-                <div class='input-field col s6 m7'>
-                  <input name='code' value='".$code."' type='text' hidden>
-                  <i class='material-icons prefix'>palette</i>
-                  <input id='icon_prefix' name='description' type='text' class='validate' value='".$description."'>
-                  <label for='icon_prefix'>Talento</label>
-                </div>
-                <div class='input-field col s6 m5'>
-                  <button class='btn waves-effect waves-light' type='submit' value='update' name='update'>Actualizar
-                    <i class='material-icons right'>edit</i>
-                  </button>
-                  <a href='TalentView.php' class='waves-effect waves-light btn grey'><i class='material-icons right'>cancel</i>Cancelar</a>
-                </div>
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input id='fullname' name='fullname' type='text' class='validate' autocomplete='off'>
+                <label for='fullname'>Nombre Completo</label>
               </div>
-            </form>
-          </div>";
-  }
-echo "</div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                <input id='birth_date' name='birth_date' type='date'>
+                <label for='birth_date'>Fecha de Nacimiento</label>
+              </div>
+              <div class='input-field col s6'>
+                  <select name='cod_gender'>
+                    <option value='' disabled selected>Elije una opción</option>";
+              echo "<option value='1'>MASCULINO</option>";
+              echo "<option value='2'>FEMENINO</option>";
+            echo "</select>
+                  <label>Género</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                <input id='address' name='address' type='text' class='validate' autocomplete='off'>
+                <label for='address'>Dirección</label>
+              </div>
+              <div class='input-field col s6'>
+                <input id='email' name='email' type='email' class='validate' autocomplete='off'>
+                <label for='email'>Correo Electrónico</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                  <select name='cod_health'>
+                    <option value='' disabled selected>Elije una opción</option>";
+            for ($i=0; $i < $h_lenght; $i++) {
+              echo "<option value='".$health[$i][1]."'>".$health[$i][2]."</option>";//Lista de Comités
+            }
+            echo "</select>
+                  <label>EPS</label>
+              </div>
+              <div class='input-field col s6'>
+                  <select name='cod_thealth'>
+                    <option value='' disabled selected>Elije una opción</option>";
+              echo "<option value='1'>COTIZANTE</option>";
+              echo "<option value='2'>BENEFICIARIO</option>";
+              echo "<option value='3'>SUBSIDIADO</option>";
+            echo "</select>
+                  <label>Tipo persona EPS</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                  <select name='cod_committee'>
+                    <option value='' disabled selected>Elije una opción</option>";
+            for ($i=0; $i < $c_lenght; $i++) {
+              echo "<option value='".$committe[$i][1]."'>".$committe[$i][2]."</option>";//Lista de Comités
+            }
+            echo "</select>
+                  <label>Cómité</label>
+              </div>
+              <div class='input-field col s6'>
+                  <select name='cod_knowledge'>
+                    <option value='' disabled selected>Elije una opción</option>";
+              echo "<option value='4'>PREESCOLAR</option>";
+              echo "<option value='5'>PRIMARIA</option>";
+              echo "<option value='6'>SECUNDARIA</option>";
+              echo "<option value='7'>BACHILLER</option>";
+              echo "<option value='8'>MEDIA TÉCNICA</option>";
+              echo "<option value='9'>TÉCNICA</option>";
+              echo "<option value='10'>TECNOLOGÍA</option>";
+              echo "<option value='11'>PROFESIONAL</option>";
+              echo "<option value='12'>ESPECIALIZACIÓN</option>";
+              echo "<option value='13'>MAESTRÍA</option>";
+              echo "<option value='14'>DOCTORADO</option>";
+            echo "</select>
+                  <label>Nivel Académico</label>
+              </div>
+            </div>
+
+            <div style='text-align: right' class='container input-field col s12'>
+              <button class='btn btn-block waves-effect waves-light btn-large blue darken-4' type='submit' value='create' name='create'>Crear
+                <i class='material-icons right'>add_circle</i>
+              </button>
+            </div>
+
+          </form>
+        </div>
       <br>
     </div>
   </main>

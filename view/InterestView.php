@@ -230,6 +230,7 @@ echo "
     <div id='people' class='dropdown-content'>
       <ul>
         <li><a href='AfiliadosView.php'>Gestión Afiliados</a></li>
+        <li><a href='FamiliarsView.php'>Gestión Familiares</a></li>
       </ul>
     </div>
     <!-- ADMINISTRACIÓN -->
@@ -273,7 +274,7 @@ echo "
   }
   if($_POST['edit'] !== 'edit'){
     echo "<div class='row'>
-          <table class='striped responsive-table centered'>
+          <table class='striped bordered responsive-table centered'>
             <thead>
               <tr>
                 <th>Código</th>

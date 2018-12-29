@@ -1,37 +1,31 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 //Incluye código 
-include("../model/TalentModel.php");
-include("../control/ctrTalent.php");
+include("../model/PersonModel.php");
+include("../control/ctrPerson.php");
 include("../control/ctrConnection.php");
 //Variables
-$code = "";
-$description = "";
 
-if($_POST['edit'] == 'edit'){
-  $code = $_POST['code'];
-  $description = $_POST['description'];
-}
-//Listar ocupaciones
-$oTalent = new TalentModel(null, null);
-$oCtrTalent = new ctrTalent($oTalent);
-$talent = $oCtrTalent->talent_list();
-$t_lenght = count($talent);
-  //create
+//Listar entidades de salud
+$oPerson = new PersonModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+$oCtrPerson = new ctrPerson($oPerson);
+$afiliados = $oCtrPerson->afiliados_list();
+$a_lenght = count($afiliados);
+/*   //create
 if ($_POST["create"] == "create") {
   try {
     //setting values
-    $description = $_POST['description'];
-    $oTalent = new TalentModel(null, $description);
-    $oCtrTalent = new ctrTalent($oTalent);
+    $company = $_POST['health'];
+    $oPerson = new PersonModel(null, $company);
+    $oCtrPerson = new ctrPerson($oPerson);
 
-    $oCtrTalent->create();
+    $oCtrPerson->create();
     //Esta variable se usa para mostrar un mensaje de alerta
     echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
     //Vacia los variables correspondientes al área
-    $description = "";
-    $talent = $oCtrTalent->talent_list();
-    $t_lenght = count($talent);
+    $company = "";
+    $health = $oCtrPerson->health_list();
+    $h_lenght = count($health);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -41,15 +35,15 @@ if ($_POST["update"] == "update") {
   try {
     //setting values
     $code = $_POST['code'];
-    $description = $_POST['description'];
-    $oTalent = new TalentModel($code, $description);
-    $oCtrTalent = new ctrTalent($oTalent);
-    if ($oCtrTalent->update()) {
+    $company = $_POST['health'];
+    $oPerson = new PersonModel($code, $company);
+    $oCtrPerson = new ctrPerson($oPerson);
+    if ($oCtrPerson->update()) {
       echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
     } else {
       echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
     }
-    header('Location: TalentView.php');
+    header('Location: HealthView.php');
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -59,21 +53,21 @@ if ($_POST['delete'] == 'delete') {
   try {
 
     $code = $_POST['code'];
-    $oTalent = new TalentModel($code, null);
-    $oCtrTalent = new ctrTalent($oTalent);
+    $oPerson = new PersonModel($code, null);
+    $oCtrPerson = new ctrPerson($oPerson);
 
-    if ($oCtrTalent->delete()) {
+    if ($oCtrPerson->delete()) {
       echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
     } else {
       echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
     }
-    $talent = $oCtrTalent->talent_list();
-    $t_lenght = count($talent);
+    $health = $oCtrPerson->health_list();
+    $h_lenght = count($health);
 
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
-}
+} */
 echo "
 <!DOCTYPE html>
 <html lang='es'>
@@ -84,7 +78,7 @@ echo "
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <meta name='msapplication-tap-highlight' content='no'>
   <meta name='description' content=''>
-  <title>Talento - JAC</title>
+  <title>Afiliados - JAC</title>
   <link href='https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css' rel='stylesheet'>
   <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/jqvmap.css?7221760363237152919' rel='stylesheet'>
   <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/flag-icon.min.css?7221760363237152919' rel='stylesheet'>
@@ -212,7 +206,7 @@ echo "
   <header>
     <div class='navbar-fixed'>
       <nav class='navbar white'>
-        <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Talento</a>
+        <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Afiliados</a>
           <ul id='nav-mobile' class='right'>
             <li class='hide-on-med-and-down'>
               <a class='dropdown-trigger waves-effect' href='#' data-target='people'>Personas</a>
@@ -250,88 +244,64 @@ echo "
     </div>
   </header>
   <main>
-    <div class='container'>
+  <div class='container'>
       <br>
       <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
-        <br>";
-  if($_POST['edit'] !== 'edit'){
-  echo "<div class='row'>
-          <form id='talent' name='create' action='TalentView.php' method='POST'>
-            <div class='row'>
-              <div class='input-field col s6 m7'>
-                <i class='material-icons prefix'>palette</i>
-                <input id='icon_prefix' name='description' type='text' class='validate' autocomplete='off'>
-                <label for='icon_prefix'>Talento</label>
-              </div>
-              <div class='input-field col s6 m5'>
-                <button class='btn waves-effect waves-light blue darken-4' type='submit' value='create' name='create'>Crear
-                  <i class='material-icons right'>add_circle</i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>";
-  }
-  if($_POST['edit'] !== 'edit'){
-    echo "<div class='row'>
-          <table class='striped bordered responsive-table centered'>
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Talento</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>";
+        <br>
+        <div 
+        class='row' 
+        style='height: 70vh;
+        overflow-y: scroll;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-bottom: 10px;
+        padding: 10px;'>
+          <table class='striped bordered responsive-table'>
+              <thead>
+                <tr>
+                  <th>Identificación</th>
+                  <th>Tipo Identificación</th>
+                  <th>Nombre</th>
+                  <th>Fecha Nacimiento</th>
+                  <th>Edad</th>
+                  <th>Dirección</th>
+                  <th>Email</th>
+                  <th>Género</th>
+                  <th>EPS</th>
+                  <th>Tipo Salud</th>
+                  <th>Comité</th>
+                  <th>Nivel Académico</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>";
 
-              if ($t_lenght > 0) {
-                for ($i=0; $i < $t_lenght; $i++) { 
-                  echo "
-                  <tr>
-                    <form id='talent' name='create' action='TalentView.php' method='POST'>
-                      <td>". $talent[$i][1] ."</td>
-                      <td>". $talent[$i][2] ."</td>
-                      <td>
-                        <input name='code' value='".$talent[$i][1]."' type='text' hidden>
-                        <input name='description' value='".$talent[$i][2]."' type='text' hidden>
-                        <button title='Editar' class='btn waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
-                          <i class='material-icons'>edit</i>
-                        </button>
-                        <button title='Eliminar' class='btn waves-effect waves-light red' type='submit' value='delete' name='delete'>
-                          <i class='material-icons'>delete</i>
-                        </button>
-                      </td>
-                    </form>
-                  </tr>";
+                if ($a_lenght > 0) {
+                  for ($i=0; $i < $a_lenght; $i++) { 
+                    echo "
+                    <tr>
+                      <form id='health' name='create' action='HealthView.php' method='POST'>
+                        <td>". $afiliados[$i][1] ."</td>
+                        <td>". $afiliados[$i][2] ."</td>
+                        <td>". $afiliados[$i][3] ."</td>
+                        <td>". $afiliados[$i][4] ."</td>
+                        <td>". $afiliados[$i][5] ."</td>
+                        <td>". $afiliados[$i][6] ."</td>
+                        <td>". $afiliados[$i][7] ."</td>
+                        <td>". $afiliados[$i][8] ."</td>
+                        <td>". $afiliados[$i][9] ."</td>
+                        <td>". $afiliados[$i][10] ."</td>
+                        <td>". $afiliados[$i][11] ."</td>
+                        <td>". $afiliados[$i][12] ."</td>
+                      </form>
+                    </tr>";
+                  }
                 }
-              }
-
-            echo "</tbody>
-          </table>
-        </div>"; 
-  }else{
-    echo "<div class='row'>
-            <form id='talent' action='TalentView.php' method='POST'>
-              <div class='row'>
-                <div class='input-field col s6 m7'>
-                  <input name='code' value='".$code."' type='text' hidden>
-                  <i class='material-icons prefix'>palette</i>
-                  <input id='icon_prefix' name='description' type='text' class='validate' value='".$description."'>
-                  <label for='icon_prefix'>Talento</label>
-                </div>
-                <div class='input-field col s6 m5'>
-                  <button class='btn waves-effect waves-light' type='submit' value='update' name='update'>Actualizar
-                    <i class='material-icons right'>edit</i>
-                  </button>
-                  <a href='TalentView.php' class='waves-effect waves-light btn grey'><i class='material-icons right'>cancel</i>Cancelar</a>
-                </div>
-              </div>
-            </form>
-          </div>";
-  }
-echo "</div>
-      <br>
-    </div>
+        echo "</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
   </main>
   <!--JavaScript at end of body for optimized loading-->
   <script type='text/javascript' src='../materialize/js/materialize.min.js'></script>

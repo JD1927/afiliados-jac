@@ -12,7 +12,7 @@ if($_POST['edit'] == 'edit'){
   $code = $_POST['code'];
   $description = $_POST['description'];
 }
-//Listar ocupaciones
+//Listar comités
 $oCommittee = new CommitteeModel(null, null);
 $oCtrCommittee = new ctrCommittee($oCommittee);
 $committe = $oCtrCommittee->committee_list();
@@ -230,6 +230,7 @@ echo "
     <div id='people' class='dropdown-content'>
       <ul>
         <li><a href='AfiliadosView.php'>Gestión Afiliados</a></li>
+        <li><a href='FamiliarsView.php'>Gestión Familiares</a></li>
       </ul>
     </div>
     <!-- ADMINISTRACIÓN -->
@@ -237,7 +238,7 @@ echo "
       <ul>
         <li><a href='CommitteeView.php'>Gestión Comités</a></li>
         <li><a href='HealthView.php'>Gestión EPS-Sisbén</a></li>
-        <li><a href='TalentView.php'>Comités</a></li>
+        <li><a href='TalentView.php'>Talentos</a></li>
         <li><a href='InterestView.php'>Ocupaciones</a></li>
       </ul>
     </div>
@@ -273,7 +274,7 @@ echo "
   }
   if($_POST['edit'] !== 'edit'){
     echo "<div class='row'>
-          <table class='striped responsive-table centered'>
+          <table class='striped bordered responsive-table centered'>
             <thead>
               <tr>
                 <th>Código</th>
