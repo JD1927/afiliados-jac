@@ -1,4 +1,4 @@
-<?
+<?php
 class ctrInterest
 {
   var $oInterest;
@@ -13,9 +13,9 @@ class ctrInterest
     //Obtiene los valores ingresados en la vista
     $description = $this->oInterest->getDescription();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
     $insert = "INSERT into OCUPACION (DESCRIPCION) values ('" . $description . "')";
     $recordSet = $oConnection->executeSQL($bd, $insert);
@@ -33,9 +33,9 @@ class ctrInterest
   {
     
             //---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
             //--------------Se ejecuta Comando SQL-------------------------
     $select = "SELECT * FROM OCUPACION";
             //  echo " Comando SQL : ". $select;
@@ -62,9 +62,9 @@ class ctrInterest
     $code = $this->oInterest->getCode();
     $description = $this->oInterest->getDescription();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
     $update = "UPDATE OCUPACION SET DESCRIPCION ='" . $description . "' WHERE CODIGO=" . $code . "";
     $recordSet = $oConnection->executeSQL($bd, $update);
@@ -83,9 +83,9 @@ class ctrInterest
     $code = $this->oInterest->getCode();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
             //---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
             
 		//--------------Se ejecuta Comando SQL-------------------------
     $delete = "DELETE FROM OCUPACION where CODIGO =" . $code . "";

@@ -45,7 +45,7 @@ if ($_POST["create"] == "create") {
 
     $oCtrPerson->create();
     //Esta variable se usa para mostrar un mensaje de alerta
-    echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
+    echo("<script>alert('¡El afiliado ha sido creado exitosamente!');</script>");
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -281,10 +281,10 @@ echo "
               <div class='input-field col s6'>
                   <select name='id_type'>
                     <option value='' disabled selected>Elije una opción</option>";
-              echo "<option value='1'>CÉDULA DE CIUDADANÍA</option>";
-              echo "<option value='2'>TARJETA DE IDENTIDAD</option>";
-              echo "<option value='3'>REGISTRO CIVIL</option>";
-              echo "<option value='4'>CÉDULA DE EXTRANJERÍA</option>";
+              echo "<option value='1'>Registro Civil</option>";
+              echo "<option value='2'>Tarjeta de Identidad</option>";
+              echo "<option value='3'>Cédula de Ciudadanía</option>";
+              echo "<option value='4'>Cédula de Extranjería</option>";
             echo "</select>
                   <label>Tipo de Identificación</label>
               </div>
@@ -305,8 +305,8 @@ echo "
               <div class='input-field col s6'>
                   <select name='cod_gender'>
                     <option value='' disabled selected>Elije una opción</option>";
-              echo "<option value='1'>MASCULINO</option>";
-              echo "<option value='2'>FEMENINO</option>";
+              echo "<option value='1'>Masculino</option>";
+              echo "<option value='2'>Femenino</option>";
             echo "</select>
                   <label>Género</label>
               </div>
@@ -336,9 +336,9 @@ echo "
               <div class='input-field col s6'>
                   <select name='cod_thealth'>
                     <option value='' disabled selected>Elije una opción</option>";
-              echo "<option value='1'>COTIZANTE</option>";
-              echo "<option value='2'>BENEFICIARIO</option>";
-              echo "<option value='3'>SUBSIDIADO</option>";
+              echo "<option value='1'>Cotizante</option>";
+              echo "<option value='2'>Beneficiario</option>";
+              echo "<option value='3'>Subsidiado</option>";
             echo "</select>
                   <label>Tipo persona EPS</label>
               </div>
@@ -357,17 +357,18 @@ echo "
               <div class='input-field col s6'>
                   <select name='cod_knowledge'>
                     <option value='' disabled selected>Elije una opción</option>";
-              echo "<option value='4'>PREESCOLAR</option>";
-              echo "<option value='5'>PRIMARIA</option>";
-              echo "<option value='6'>SECUNDARIA</option>";
-              echo "<option value='7'>BACHILLER</option>";
-              echo "<option value='8'>MEDIA TÉCNICA</option>";
-              echo "<option value='9'>TÉCNICA</option>";
-              echo "<option value='10'>TECNOLOGÍA</option>";
-              echo "<option value='11'>PROFESIONAL</option>";
-              echo "<option value='12'>ESPECIALIZACIÓN</option>";
-              echo "<option value='13'>MAESTRÍA</option>";
-              echo "<option value='14'>DOCTORADO</option>";
+              echo "<option value='1'>Preescolar</option>";
+              echo "<option value='2'>Primaria</option>";
+              echo "<option value='3'>Secundaria</option>";
+              echo "<option value='4'>Bachiller</option>";
+              echo "<option value='5'>Media Técnica</option>";
+              echo "<option value='6'>Técnica</option>";
+              echo "<option value='7'>Tecnología</option>";
+              echo "<option value='8'>Profesional</option>";
+              echo "<option value='9'>Especialización</option>";
+              echo "<option value='10'>Maestría</option>";
+              echo "<option value='11'>Doctorado</option>";
+              echo "<option value='12'>Ninguno</option>";
             echo "</select>
                   <label>Nivel Académico</label>
               </div>

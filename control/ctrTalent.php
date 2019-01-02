@@ -1,4 +1,4 @@
-<?
+<?php
 class ctrTalent
 {
   var $oTalent;
@@ -13,9 +13,9 @@ class ctrTalent
     //Obtiene los valores ingresados en la vista
     $description = $this->oTalent->getDescription();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
     $insert = "INSERT into HOBBY (DESCRIPCION) values ('" . $description . "')";
     $recordSet = $oConnection->executeSQL($bd, $insert);
@@ -33,9 +33,9 @@ class ctrTalent
   {
     
             //---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
             //--------------Se ejecuta Comando SQL-------------------------
     $select = "SELECT * FROM HOBBY";
             //  echo " Comando SQL : ". $select;
@@ -62,9 +62,9 @@ class ctrTalent
     $code = $this->oTalent->getCode();
     $description = $this->oTalent->getDescription();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
     $update = "UPDATE HOBBY SET DESCRIPCION ='" . $description . "' WHERE CODIGO=" . $code . "";
     $recordSet = $oConnection->executeSQL($bd, $update);
@@ -83,9 +83,9 @@ class ctrTalent
     $code = $this->oTalent->getCode();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
             //---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
             
 		//--------------Se ejecuta Comando SQL-------------------------
     $delete = "DELETE FROM HOBBY where CODIGO =" . $code . "";

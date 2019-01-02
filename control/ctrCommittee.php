@@ -1,4 +1,4 @@
-<?
+<?php
 class ctrCommittee
 {
   var $oCommittee;
@@ -13,9 +13,9 @@ class ctrCommittee
     //Obtiene los valores ingresados en la vista
     $description = $this->oCommittee->getDescription();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
     $insert = "INSERT into COMITE (DESCRIPCION) values ('" . $description . "')";
     $recordSet = $oConnection->executeSQL($bd, $insert);
@@ -32,9 +32,9 @@ class ctrCommittee
   function committee_list()
   {
             //---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
             //--------------Se ejecuta Comando SQL-------------------------
     $select = "SELECT * FROM COMITE";
             //  echo " Comando SQL : ". $select;
@@ -61,9 +61,9 @@ class ctrCommittee
     $code = $this->oCommittee->getCode();
     $description = $this->oCommittee->getDescription();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
     $update = "UPDATE COMITE SET DESCRIPCION ='" . $description . "' WHERE CODIGO=" . $code . "";
     $recordSet = $oConnection->executeSQL($bd, $update);
@@ -82,9 +82,9 @@ class ctrCommittee
     $code = $this->oCommittee->getCode();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
             //---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
             
 		//--------------Se ejecuta Comando SQL-------------------------
     $delete = "DELETE FROM COMITE where CODIGO =" . $code . "";

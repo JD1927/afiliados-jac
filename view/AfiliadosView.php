@@ -1,73 +1,16 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 //Incluye código 
 include("../model/PersonModel.php");
 include("../control/ctrPerson.php");
 include("../control/ctrConnection.php");
 //Variables
 
-//Listar entidades de salud
+//Listar afiliados
 $oPerson = new PersonModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 $oCtrPerson = new ctrPerson($oPerson);
 $afiliados = $oCtrPerson->afiliados_list();
 $a_lenght = count($afiliados);
-/*   //create
-if ($_POST["create"] == "create") {
-  try {
-    //setting values
-    $company = $_POST['health'];
-    $oPerson = new PersonModel(null, $company);
-    $oCtrPerson = new ctrPerson($oPerson);
-
-    $oCtrPerson->create();
-    //Esta variable se usa para mostrar un mensaje de alerta
-    echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    //Vacia los variables correspondientes al área
-    $company = "";
-    $health = $oCtrPerson->health_list();
-    $h_lenght = count($health);
-  } catch (Exception $exp) {
-    echo "ERROR ....R " . $exp->getMessage() . "\n";
-  }
-}
-  //update
-if ($_POST["update"] == "update") {
-  try {
-    //setting values
-    $code = $_POST['code'];
-    $company = $_POST['health'];
-    $oPerson = new PersonModel($code, $company);
-    $oCtrPerson = new ctrPerson($oPerson);
-    if ($oCtrPerson->update()) {
-      echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    } else {
-      echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
-    }
-    header('Location: HealthView.php');
-  } catch (Exception $exp) {
-    echo "ERROR ....R " . $exp->getMessage() . "\n";
-  }
-}
-  //delete
-if ($_POST['delete'] == 'delete') {
-  try {
-
-    $code = $_POST['code'];
-    $oPerson = new PersonModel($code, null);
-    $oCtrPerson = new ctrPerson($oPerson);
-
-    if ($oCtrPerson->delete()) {
-      echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    } else {
-      echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
-    }
-    $health = $oCtrPerson->health_list();
-    $h_lenght = count($health);
-
-  } catch (Exception $exp) {
-    echo "ERROR ....R " . $exp->getMessage() . "\n";
-  }
-} */
 echo "
 <!DOCTYPE html>
 <html lang='es'>
@@ -244,64 +187,75 @@ echo "
     </div>
   </header>
   <main>
-  <div class='container'>
-      <br>
-      <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
-        <br>
-        <div 
-        class='row' 
-        style='height: 70vh;
-        overflow-y: scroll;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        margin-bottom: 10px;
-        padding: 10px;'>
-          <table class='striped bordered responsive-table'>
-              <thead>
-                <tr>
-                  <th>Identificación</th>
-                  <th>Tipo Identificación</th>
-                  <th>Nombre</th>
-                  <th>Fecha Nacimiento</th>
-                  <th>Edad</th>
-                  <th>Dirección</th>
-                  <th>Email</th>
-                  <th>Género</th>
-                  <th>EPS</th>
-                  <th>Tipo Salud</th>
-                  <th>Comité</th>
-                  <th>Nivel Académico</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>";
 
-                if ($a_lenght > 0) {
-                  for ($i=0; $i < $a_lenght; $i++) { 
-                    echo "
-                    <tr>
-                      <form id='health' name='create' action='HealthView.php' method='POST'>
-                        <td>". $afiliados[$i][1] ."</td>
-                        <td>". $afiliados[$i][2] ."</td>
-                        <td>". $afiliados[$i][3] ."</td>
-                        <td>". $afiliados[$i][4] ."</td>
-                        <td>". $afiliados[$i][5] ."</td>
-                        <td>". $afiliados[$i][6] ."</td>
-                        <td>". $afiliados[$i][7] ."</td>
-                        <td>". $afiliados[$i][8] ."</td>
-                        <td>". $afiliados[$i][9] ."</td>
-                        <td>". $afiliados[$i][10] ."</td>
-                        <td>". $afiliados[$i][11] ."</td>
-                        <td>". $afiliados[$i][12] ."</td>
-                      </form>
-                    </tr>";
-                  }
-                }
-        echo "</tbody>
-            </table>
-          </div>
+  <div class='container'>
+    <br>
+    <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
+      <br>
+      <div class='row'>
+        <div class='col s10'>
+          <h5 style='text-align:center'>Lista de Afiliados</h5>
+        </div>
+        <div class='col s2'>
+          <a href='CreateAfiliadoView.php' class='btn waves-effect waves-light blue darken-4'>Crear
+            <i class='material-icons right'>add_circle</i>
+          </a>
         </div>
       </div>
+      <div class='row' style='height: 70vh;
+          overflow-y: scroll;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-bottom: 10px;
+          padding: 10px;'>
+        <table class='striped bordered centered responsive-table'>
+          <thead>
+            <tr>
+              <th>Identificación</th>
+              <th>Nombre Completo</th>
+              <th>Fecha Nacimiento</th>
+              <th>Edad</th>
+              <th>Dirección</th>
+              <th>Comité</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>";
+  
+            if ($a_lenght > 0) {
+            for ($i=0; $i < $a_lenght; $i++) { echo
+              "
+              <tr>
+                
+                  <td>". $afiliados[$i][1] ."</td> 
+                  <td>". $afiliados[$i][2] ."</td>
+                  <td>". $afiliados[$i][3] ."</td>
+                  <td>". $afiliados[$i][4] ."</td>
+                  <td>". $afiliados[$i][5] ."</td>
+                  <td>". $afiliados[$i][6] ."</td>
+                  <td>
+                    <form id='afiliado_update' name='create' action='UpdateAfiliadoView.php' method='POST'>
+                      <input name='id_update' value='".$afiliados[$i][1]."' type='text' hidden>
+                      <button title='Ver información detallada' class='btn btn-small waves-effect waves-light' type='submit' value='view' name='view'>
+                        <i class='material-icons'>perm_identity</i>
+                      </button>
+                      <button title='Actualizar información' class='btn btn-small waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
+                        <i class='material-icons'>edit</i>
+                      </button>
+                      <button title='Eliminar usuario' class='btn btn-small waves-effect waves-light red' type='submit' value='delete' name='delete'>
+                        <i class='material-icons'>delete</i>
+                      </button>
+                    </form>
+                  </td>
+
+              </tr>";
+              }
+              }
+              echo "</tbody>
+        </table>
+      </div>
+    </div>
+  </div>
   </main>
   <!--JavaScript at end of body for optimized loading-->
   <script type='text/javascript' src='../materialize/js/materialize.min.js'></script>

@@ -1,4 +1,4 @@
-<?
+<?php
 class ctrHealth
 {
   var $oHealth;
@@ -13,9 +13,9 @@ class ctrHealth
     //Obtiene los valores ingresados en la vista
     $company = $this->oHealth->getCompany();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
     $select = "INSERT into SALUD (ENTIDAD) values ('" . $company . "')";
     $recordSet = $oConnection->executeSQL($bd, $select);
@@ -33,9 +33,9 @@ class ctrHealth
   {
     
             //---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
     
     
             //--------------Se ejecuta Comando SQL-------------------------
@@ -64,9 +64,9 @@ class ctrHealth
     $code = $this->oHealth->getCode();
     $company = $this->oHealth->getCompany();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
     $update = "UPDATE SALUD SET ENTIDAD='" . $company . "' WHERE CODIGO=" . $code . "";
     $recordSet = $oConnection->executeSQL($bd, $update);
@@ -85,9 +85,9 @@ class ctrHealth
     $code = $this->oHealth->getCode();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
             //---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
-    $bd = "AFILIADOS_JAC";
+    $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
-    $link = $oConnection->connect('localhost', $bd, 'jac', 'krBkP6wK2QRax9A');
+    $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
             
 		//--------------Se ejecuta Comando SQL-------------------------
     $delete = "DELETE FROM SALUD where CODIGO =" . $code . "";
