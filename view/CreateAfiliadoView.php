@@ -50,46 +50,7 @@ if ($_POST["create"] == "create") {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
 }
-  //update
-/* if ($_POST["update"] == "update") {
-  try {
-    //setting values
-    $code = $_POST['code'];
-    $description = $_POST['description'];
-    $oPerson = new PersonModel($id,$id_type,$fullname,$cod_tper,$birth_date,$address,
-		$email,$cod_gender,$cod_health,	$cod_thealth,	$cod_committee,$cod_knowledge,null);
-    $oCtrPerson = new ctrPerson($oPerson);
-    if ($oCtrPerson->update()) {
-      echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    } else {
-      echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
-    }
-    header('Location: TalentView.php');
-  } catch (Exception $exp) {
-    echo "ERROR ....R " . $exp->getMessage() . "\n";
-  }
-} */
-  //delete
-/* if ($_POST['delete'] == 'delete') {
-  try {
 
-    $code = $_POST['code'];
-    $oPerson = new PersonModel($id,$id_type,$fullname,$cod_tper,$birth_date,$address,
-		$email,$cod_gender,$cod_health,	$cod_thealth,	$cod_committee,$cod_knowledge,null);
-    $oCtrPerson = new ctrPerson($oPerson);
-
-    if ($oCtrPerson->delete()) {
-      echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    } else {
-      echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
-    }
-    $talent = $oCtrPerson->person_list();
-    $t_lenght = count($talent);
-
-  } catch (Exception $exp) {
-    echo "ERROR ....R " . $exp->getMessage() . "\n";
-  }
-} */
 echo "
 <!DOCTYPE html>
 <html lang='es'>
@@ -271,7 +232,7 @@ echo "
       <div class='card card-metrics card-metrics-toggle card-metrics-centered'><br>
       <h4 style='text-align:center'>Nuevo Afiliado</h4><br>
         <div class='row'>
-          <form class='col s12' action='CreateAfiliadoView.php' method='POST'>
+          <form id='createAfiliado' class='col s12' action='CreateAfiliadoView.php' method='POST'>
 
             <div class='row'>
               <div class='input-field col s6'>
@@ -381,6 +342,7 @@ echo "
             </div>
 
           </form>
+
         </div>
       <br>
     </div>

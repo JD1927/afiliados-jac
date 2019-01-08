@@ -11,6 +11,7 @@ $oPerson = new PersonModel(null, null, null, null, null, null, null, null, null,
 $oCtrPerson = new ctrPerson($oPerson);
 $afiliados = $oCtrPerson->afiliados_list();
 $a_lenght = count($afiliados);
+
 echo "
 <!DOCTYPE html>
 <html lang='es'>
@@ -233,21 +234,29 @@ echo "
                   <td>". $afiliados[$i][4] ."</td>
                   <td>". $afiliados[$i][5] ."</td>
                   <td>". $afiliados[$i][6] ."</td>
-                  <td>
-                    <form id='afiliado_update' name='create' action='UpdateAfiliadoView.php' method='POST'>
-                      <input name='id_update' value='".$afiliados[$i][1]."' type='text' hidden>
-                      <button title='Ver información detallada' class='btn btn-small waves-effect waves-light' type='submit' value='view' name='view'>
-                        <i class='material-icons'>perm_identity</i>
-                      </button>
-                      <button title='Actualizar información' class='btn btn-small waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
-                        <i class='material-icons'>edit</i>
-                      </button>
-                      <button title='Eliminar usuario' class='btn btn-small waves-effect waves-light red' type='submit' value='delete' name='delete'>
-                        <i class='material-icons'>delete</i>
-                      </button>
-                    </form>
+                  <td style='text-align:center'>
+                  <div class='row'>
+                    <div class='col s4'>
+                      <form id='afiliado_view' name='afiliado_view' action='AfiliadoDetail.php' method='POST'>
+                        <input name='id_afiliado' value='".$afiliados[$i][1]."' type='text' hidden>
+                        <button title='Ver información detallada' class='btn btn-small waves-effect waves-light' type='submit' value='view' name='view'>
+                          <i class='material-icons'>perm_identity</i>
+                        </button>
+                      </form>
+                    </div>
+                    <div class='col s8'>
+                      <form id='afiliado_update' name='create' action='UpdateAfiliadoView.php' method='POST'>
+                        <input name='id_update' value='".$afiliados[$i][1]."' type='text' hidden>
+                        <button title='Actualizar información' class='btn btn-small waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
+                          <i class='material-icons'>edit</i>
+                        </button>
+                        <button title='Eliminar usuario' class='btn btn-small waves-effect waves-light red' type='submit' value='delete' name='delete'>
+                          <i class='material-icons'>delete</i>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                   </td>
-
               </tr>";
               }
               }

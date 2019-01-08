@@ -14,7 +14,7 @@ if($_POST['edit'] == 'edit'){
 }
 //Listar ocupaciones
 $oInterest = new InterestModel(null, null);
-$oCtrInterest = new ctrInterest($oInterest);
+$oCtrInterest = new ctrInterest($oInterest, null);
 $interest = $oCtrInterest->interest_list();
 $i_lenght = count($interest);
   //create
@@ -23,7 +23,7 @@ if ($_POST["create"] == "create") {
     //setting values
     $description = $_POST['description'];
     $oInterest = new InterestModel(null, $description);
-    $oCtrInterest = new ctrInterest($oInterest);
+    $oCtrInterest = new ctrInterest($oInterest, null);
 
     $oCtrInterest->create();
     //Esta variable se usa para mostrar un mensaje de alerta
@@ -43,7 +43,7 @@ if ($_POST["update"] == "update") {
     $code = $_POST['code'];
     $description = $_POST['description'];
     $oInterest = new InterestModel($code, $description);
-    $oCtrInterest = new ctrInterest($oInterest);
+    $oCtrInterest = new ctrInterest($oInterest, null);
     if ($oCtrInterest->update()) {
       echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
     } else {
@@ -60,7 +60,7 @@ if ($_POST['delete'] == 'delete') {
 
     $code = $_POST['code'];
     $oInterest = new InterestModel($code, null);
-    $oCtrInterest = new ctrInterest($oInterest);
+    $oCtrInterest = new ctrInterest($oInterest, null);
 
     if ($oCtrInterest->delete()) {
       echo("<script>alert('¡La acción se realizó exitosamente!');</script>");

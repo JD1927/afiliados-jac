@@ -7,12 +7,39 @@ include("../model/HealthModel.php");
 include("../control/ctrHealth.php");
 include("../model/CommitteeModel.php");
 include("../control/ctrCommittee.php");
+include("../model/TalentModel.php");
+include("../control/ctrTalent.php");
+include("../model/InterestModel.php");
+include("../control/ctrInterest.php");
+include("../model/ContactModel.php");
+include("../control/ctrContact.php");
 include("../control/ctrConnection.php");
 //Variables
-$id = $_POST['id_update'];
-$i=0;
-$oPerson = new PersonModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-$oCtrPerson = new ctrPerson($oPerson);
+//Listar comités
+$oCommittee = new CommitteeModel(null, null);
+$oCtrCommittee = new ctrCommittee($oCommittee);
+$committe = $oCtrCommittee->committee_list();
+$c_lenght = count($committe);
+
+//Listar entidades de salud
+$oHealth = new HealthModel(null, null);
+$oCtrHealth = new ctrHealth($oHealth);
+$health = $oCtrHealth->health_list();
+$h_lenght = count($health);
+
+//listar talentos
+$oTalent = new TalentModel(null, null);
+$oCtrTalent = new ctrTalent($oTalent, $oPerson);
+$talents = $oCtrTalent->talent_list();
+$t_lenght = count($talents);
+
+//Listar ocupaciones
+$oInterest = new InterestModel(null, null);
+$oCtrInterest = new ctrInterest($oInterest, $oPerson);
+$interest = $oCtrInterest->interest_list();
+$i_lenght = count($interest);
+
+$i = 0;
 
   //delete
 if ($_POST['edit'] == 'edit') {
@@ -22,12 +49,271 @@ if ($_POST['edit'] == 'edit') {
     $oPerson = new PersonModel($id, null, null, null, null, null, null, null, null, null, null, null, null, null);
     $oCtrPerson = new ctrPerson($oPerson);
 
+    $oTalent = new TalentModel(null, null);
+    $oCtrTalent = new ctrTalent($oTalent, $oPerson);
+    $pertalent = $oCtrTalent->pertal_list();
+    $pt_lenght = count($pertalent);
+
+    $oInterest = new InterestModel(null, null);
+    $oCtrInterest = new ctrInterest($oInterest, $oPerson);
+    $perint = $oCtrInterest->perint_list();
+    $pi_lenght = count($perint);
+
+    $oContact = new ContactModel(null);
+    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $contacts = $oCtrContact->contact_list();
+    $tel_lenght = count($contacts);
+
     $afiliados = $oCtrPerson->afiliado_detail();
     $a_lenght = count($afiliados);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
 }
+
+if ($_POST['addHobby'] == 'addHobby') {
+  try {
+    $id_afiliado = $_POST['id_afiliado'];
+    $id_hobby = $_POST['id_hobby'];
+
+    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oTalent = new TalentModel($id_hobby, null);
+    $oCtrTalent = new ctrTalent($oTalent, $oPerson);
+
+    $oCtrTalent->addHobby();
+
+    $pertalent = $oCtrTalent->pertal_list();
+    $pt_lenght = count($pertalent);
+
+    $oInterest = new InterestModel(null, null);
+    $oCtrInterest = new ctrInterest($oInterest, $oPerson);
+    $perint = $oCtrInterest->perint_list();
+    $pi_lenght = count($perint);
+
+    $oContact = new ContactModel(null);
+    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $contacts = $oCtrContact->contact_list();
+    $tel_lenght = count($contacts);
+
+    $afiliados = $oCtrPerson->afiliado_detail();
+    $a_lenght = count($afiliados);
+  } catch (Exception $exp) {
+    echo "ERROR ....R " . $exp->getMessage() . "\n";
+  }
+}
+
+if ($_POST['rmHobby'] == 'rmHobby') {
+  try {
+    $id_afiliado = $_POST['id_afiliado'];
+    $id_hobby = $_POST['id_hobby'];
+
+    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oTalent = new TalentModel($id_hobby, null);
+    $oCtrTalent = new ctrTalent($oTalent, $oPerson);
+
+    $oCtrTalent->rmHobby();
+
+    $pertalent = $oCtrTalent->pertal_list();
+    $pt_lenght = count($pertalent);
+
+    $oInterest = new InterestModel(null, null);
+    $oCtrInterest = new ctrInterest($oInterest, $oPerson);
+    $perint = $oCtrInterest->perint_list();
+    $pi_lenght = count($perint);
+
+    $oContact = new ContactModel(null);
+    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $contacts = $oCtrContact->contact_list();
+    $tel_lenght = count($contacts);
+
+    $afiliados = $oCtrPerson->afiliado_detail();
+    $a_lenght = count($afiliados);
+  } catch (Exception $exp) {
+    echo "ERROR ....R " . $exp->getMessage() . "\n";
+  }
+}
+
+if ($_POST['addInterest'] == 'addInterest') {
+  try {
+    $id_afiliado = $_POST['id_afiliado'];
+    $id_int = $_POST['id_interest'];
+
+    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oInterest = new InterestModel($id_int, null);
+    $oCtrInterest = new ctrInterest($oInterest, $oPerson);
+
+    $oCtrInterest->addInterest();
+
+    $oTalent = new TalentModel(null, null);
+    $oCtrTalent = new ctrTalent($oTalent, $oPerson);
+    $pertalent = $oCtrTalent->pertal_list();
+    $pt_lenght = count($pertalent);
+
+    $perint = $oCtrInterest->perint_list();
+    $pi_lenght = count($perint);
+
+    $oContact = new ContactModel(null);
+    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $contacts = $oCtrContact->contact_list();
+    $tel_lenght = count($contacts);
+
+    $afiliados = $oCtrPerson->afiliado_detail();
+    $a_lenght = count($afiliados);
+  } catch (Exception $exp) {
+    echo "ERROR ....R " . $exp->getMessage() . "\n";
+  }
+}
+
+if ($_POST['rmInterest'] == 'rmInterest') {
+  try {
+    $id_afiliado = $_POST['id_afiliado'];
+    $id_interest = $_POST['id_interest'];
+
+    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oInterest = new InterestModel($id_interest, null);
+    $oCtrInterest = new ctrInterest($oInterest, $oPerson);
+
+    $oCtrInterest->rmInterest();
+
+    $oTalent = new TalentModel(null, null);
+    $oCtrTalent = new ctrTalent($oTalent, $oPerson);
+    $pertalent = $oCtrTalent->pertal_list();
+    $pt_lenght = count($pertalent);
+
+    $perint = $oCtrInterest->perint_list();
+    $pi_lenght = count($perint);
+
+    $oContact = new ContactModel(null);
+    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $contacts = $oCtrContact->contact_list();
+    $tel_lenght = count($contacts);
+
+    $afiliados = $oCtrPerson->afiliado_detail();
+    $a_lenght = count($afiliados);
+  } catch (Exception $exp) {
+    echo "ERROR ....R " . $exp->getMessage() . "\n";
+  }
+}
+
+if ($_POST['addContact'] == 'addContact') {
+  try {
+    $id_afiliado = $_POST['id_afiliado'];
+    $tel_phone = $_POST['tel_phone'];
+
+    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oContact = new ContactModel($tel_phone);
+    $oCtrContact = new ctrContact($oContact,$oPerson);
+
+    $oCtrContact->addContact();
+
+    $oTalent = new TalentModel(null, null);
+    $oCtrTalent = new ctrTalent($oTalent, $oPerson);
+    $pertalent = $oCtrTalent->pertal_list();
+    $pt_lenght = count($pertalent);
+
+    $oInterest = new InterestModel(null, null);
+    $oCtrInterest = new ctrInterest($oInterest, $oPerson);
+    $perint = $oCtrInterest->perint_list();
+    $pi_lenght = count($perint);
+
+    $contacts = $oCtrContact->contact_list();
+    $tel_lenght = count($contacts);
+
+    $afiliados = $oCtrPerson->afiliado_detail();
+    $a_lenght = count($afiliados);
+  } catch (Exception $exp) {
+    echo "ERROR ....R " . $exp->getMessage() . "\n";
+  }
+}
+
+if ($_POST['rmContact'] == 'rmContact') {
+  try {
+    $id_afiliado = $_POST['id_afiliado'];
+    $tel_phone = $_POST['tel_phone'];
+
+    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oContact = new ContactModel($tel_phone);
+    $oCtrContact = new ctrContact($oContact,$oPerson);
+
+    $oCtrContact->rmContact();
+
+    $oTalent = new TalentModel(null, null);
+    $oCtrTalent = new ctrTalent($oTalent, $oPerson);
+    $pertalent = $oCtrTalent->pertal_list();
+    $pt_lenght = count($pertalent);
+
+    $oInterest = new InterestModel(null, null);
+    $oCtrInterest = new ctrInterest($oInterest, $oPerson);
+    $perint = $oCtrInterest->perint_list();
+    $pi_lenght = count($perint);
+
+    $contacts = $oCtrContact->contact_list();
+    $tel_lenght = count($contacts);
+
+    $afiliados = $oCtrPerson->afiliado_detail();
+    $a_lenght = count($afiliados);
+  } catch (Exception $exp) {
+    echo "ERROR ....R " . $exp->getMessage() . "\n";
+  }
+}
+
+if ($_POST["update"] == "update") {
+  try {
+    //setting values
+    $id = $_POST['id'];
+    $id_type = $_POST['id_type'];
+    $fullname = $_POST['fullname'];
+    $birth_date = $_POST['birth_date'];
+    $address = $_POST['address'];
+    $email = $_POST['email'];
+    $cod_gender = $_POST['cod_gender'];
+    $cod_health = $_POST['cod_health'];
+    $cod_thealth = $_POST['cod_thealth'];
+    $cod_committee = $_POST['cod_committee'];
+    $cod_knowledge = $_POST['cod_knowledge'];
+
+    $oPerson = new PersonModel($id,$id_type,$fullname,1,$birth_date,$address,
+		$email,$cod_gender,$cod_health,	$cod_thealth,	$cod_committee,$cod_knowledge,null);
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oCtrPerson->update();
+
+    $oTalent = new TalentModel(null, null);
+    $oCtrTalent = new ctrTalent($oTalent, $oPerson);
+    $pertalent = $oCtrTalent->pertal_list();
+    $pt_lenght = count($pertalent);
+
+    $oInterest = new InterestModel(null, null);
+    $oCtrInterest = new ctrInterest($oInterest, $oPerson);
+    $perint = $oCtrInterest->perint_list();
+    $pi_lenght = count($perint);
+
+    $oContact = new ContactModel(null);
+    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $contacts = $oCtrContact->contact_list();
+    $tel_lenght = count($contacts);
+
+    $afiliados = $oCtrPerson->afiliado_detail();
+    $a_lenght = count($afiliados);
+
+  } catch (Exception $exp) {
+    echo "ERROR ....R " . $exp->getMessage() . "\n";
+  }
+}
+
+
 
 if ($_POST['delete'] == 'delete') {
   try {
@@ -47,6 +333,7 @@ if ($_POST['delete'] == 'delete') {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
 }
+
 echo "
   <!DOCTYPE html>
   <html lang='es'>
@@ -229,62 +516,61 @@ echo "
       <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
         <br>
         <div class='row'>
-          <div class='col s10'>
-            <h5 style='text-align:center'>Afiliado ".$afiliados[$i][1]."</h5>
-          </div>
-          <div class='col s2'>
-            <a href='UpdateAfiliadoView.php' class='btn waves-effect waves-light blue darken-4'>Actualizar
-              <i class='material-icons right'>add_circle</i>
-            </a>
-          </div>
+            <h5 style='text-align:center'>Afiliado " . $afiliados[$i][1] . "</h5>
         </div>
         <div class='row'>
+          <form id='updateAfiliado' class='col s12' action='UpdateAfiliadoView.php' method='POST'>
+            <div style='text-align: center' class='container input-field col s12'>
+              <button title='Actualizar información' class='btn waves-effect waves-light' type='submit' value='update' name='update'>Actualizar
+                <i class='material-icons right'>edit</i>
+              </button>
+            </div>
             <div class='row'>
               <div class='input-field col s6'>
-                <input id='id' name='id' type='text' value='".$id."' autocomplete='off' readonly>
+                <input id='id' name='id' type='text' value='" . $afiliados[$i][1] . "' autocomplete='off' readonly>
                 <label for='id'>Número Identificación</label>
               </div>
               <div class='input-field col s6'>
                   <select name='id_type'>
-                    <option value='".$afiliados[$i][2]."' selected>".$afiliados[$i][3]."</option>";
-              echo "<option value='1'>Registro Civil</option>";
-              echo "<option value='2'>Tarjeta de Identidad</option>";
-              echo "<option value='3'>Cédula de Ciudadanía</option>";
-              echo "<option value='4'>Cédula de Extranjería</option>";
-            echo "</select>
+                    <option value='" . $afiliados[$i][2] . "' selected>" . $afiliados[$i][3] . "</option>
+                    <option value='1'>Registro Civil</option>
+                    <option value='2'>Tarjeta de Identidad</option>
+                    <option value='3'>Cédula de Ciudadanía</option>
+                    <option value='4'>Cédula de Extranjería</option>
+                  </select>
                   <label>Tipo de Identificación</label>
               </div>
             </div>
 
             <div class='row'>
               <div class='input-field col s12'>
-                <input id='fullname' name='fullname' type='text' class='validate' value='".$afiliados[$i][4]."' autocomplete='off'>
+                <input id='fullname' name='fullname' type='text' value='" . $afiliados[$i][4] . "' autocomplete='off'>
                 <label for='fullname'>Nombre Completo</label>
               </div>
             </div>
 
             <div class='row'>
               <div class='input-field col s6'>
-                <input id='birth_date' name='birth_date' type='date'>
+                <input id='birth_date' name='birth_date' type='date' value='" . $afiliados[$i][5] . "'>
                 <label for='birth_date'>Fecha de Nacimiento</label>
               </div>
               <div class='input-field col s6'>
                   <select name='cod_gender'>
-                    <option value='' disabled selected>Elije una opción</option>";
-              echo "<option value='1'>Masculino</option>";
-              echo "<option value='2'>Femenino</option>";
-            echo "</select>
+                    <option value='" . $afiliados[$i][9] . "' selected>" . $afiliados[$i][10] . "</option>
+                    <option value='1'>Masculino</option>
+                    <option value='2'>Femenino</option>
+                  </select>
                   <label>Género</label>
               </div>
             </div>
 
             <div class='row'>
               <div class='input-field col s6'>
-                <input id='address' name='address' type='text' class='validate' autocomplete='off'>
+                <input id='address' name='address' type='text' value='" . $afiliados[$i][7] . "' autocomplete='off'>
                 <label for='address'>Dirección</label>
               </div>
               <div class='input-field col s6'>
-                <input id='email' name='email' type='email' class='validate' autocomplete='off'>
+                <input id='email' name='email' type='email' value='" . $afiliados[$i][8] . "' autocomplete='off'>
                 <label for='email'>Correo Electrónico</label>
               </div>
             </div>
@@ -292,20 +578,20 @@ echo "
             <div class='row'>
               <div class='input-field col s6'>
                   <select name='cod_health'>
-                    <option value='' disabled selected>Elije una opción</option>";
-            for ($i=0; $i < $h_lenght; $i++) {
-              echo "<option value='".$health[$i][1]."'>".$health[$i][2]."</option>";//Lista de Comités
-            }
-            echo "</select>
+                    <option value='" . $afiliados[$i][11] . "' selected> " . $afiliados[$i][12] . "</option>";
+for ($n = 0; $n < $h_lenght; $n++) {
+  echo "<option value='" . $health[$n][1] . "'>" . $health[$n][2] . "</option>";//Lista de Comités
+}
+echo "</select>
                   <label>EPS</label>
               </div>
               <div class='input-field col s6'>
                   <select name='cod_thealth'>
-                    <option value='' disabled selected>Elije una opción</option>";
-              echo "<option value='1'>Cotizante</option>";
-              echo "<option value='2'>Beneficiario</option>";
-              echo "<option value='3'>Subsidiado</option>";
-            echo "</select>
+                    <option value='" . $afiliados[$i][13] . "' selected>" . $afiliados[$i][14] . " </option>
+                    <option value='1'>Cotizante</option>
+                    <option value='2'>Beneficiario</option>
+                    <option value='3'>Subsidiado</option>
+                  </select>
                   <label>Tipo persona EPS</label>
               </div>
             </div>
@@ -313,35 +599,225 @@ echo "
             <div class='row'>
               <div class='input-field col s6'>
                   <select name='cod_committee'>
-                    <option value='' disabled selected>Elije una opción</option>";
-            for ($i=0; $i < $c_lenght; $i++) {
-              echo "<option value='".$committe[$i][1]."'>".$committe[$i][2]."</option>";//Lista de Comités
-            }
-            echo "</select>
+                    <option value='" . $afiliados[$i][15] . "' selected>" . $afiliados[$i][16] . "</option>";
+for ($n = 0; $n < $c_lenght; $n++) {
+  echo "<option value='" . $committe[$n][1] . "'>" . $committe[$n][2] . "</option>";//Lista de Comités
+}
+echo "</select>
                   <label>Cómité</label>
               </div>
               <div class='input-field col s6'>
                   <select name='cod_knowledge'>
-                    <option value='' disabled selected>Elije una opción</option>";
-              echo "<option value='1'>Preescolar</option>";
-              echo "<option value='2'>Primaria</option>";
-              echo "<option value='3'>Secundaria</option>";
-              echo "<option value='4'>Bachiller</option>";
-              echo "<option value='5'>Media Técnica</option>";
-              echo "<option value='6'>Técnica</option>";
-              echo "<option value='7'>Tecnología</option>";
-              echo "<option value='8'>Profesional</option>";
-              echo "<option value='9'>Especialización</option>";
-              echo "<option value='10'>Maestría</option>";
-              echo "<option value='11'>Doctorado</option>";
-              echo "<option value='12'>Ninguno</option>";
-            echo "</select>
+                    <option value='" . $afiliados[$i][17] . "' selected>" . $afiliados[$i][18] . "</option>
+                    <option value='1'>Preescolar</option>
+                    <option value='2'>Primaria</option>
+                    <option value='3'>Secundaria</option>
+                    <option value='4'>Bachiller</option>
+                    <option value='5'>Media Técnica</option>
+                    <option value='6'>Técnica</option>
+                    <option value='7'>Tecnología</option>
+                    <option value='8'>Profesional</option>
+                    <option value='9'>Especialización</option>
+                    <option value='10'>Maestría</option>
+                    <option value='11'>Doctorado</option>
+                    <option value='12'>Ninguno</option>
+                  </select>
                   <label>Nivel Académico</label>
               </div>
+            </div>";
+            echo "<br><div class='divider'></div><br>";
+      //HOBBY
+      echo "<div class='row'>
+              <form id='AfiliadoHobby' action='UpdateAfiliadoView.php' method='POST'>
+                <div class='input-field col s4'>
+                    <select name='id_hobby'>
+                      <option value='' disabled selected>Agregue un talento</option>";
+            for($j=0;$j<$t_lenght;$j++){
+                echo "<option value='".$talents[$j][1]."'>".$talents[$j][2]."</option>";
+            }
+                echo "<input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>";
+              echo "</select>
+                    <label>Talentos</label>
+                </div>
+                <div class='input-field col s2'>
+                    <button class='btn btn-block waves-effect waves-light btn-small blue darken-4' type='submit' value='addHobby' name='addHobby'>Agregar
+                      <i class='material-icons right'>add_circle</i>
+                    </button>
+                </div>
+              </form>
+              <div class='input-field col s6'>
+                    <div class='row' style='height: 30vh;
+                    overflow-y: scroll;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    margin-bottom: 10px;
+                    padding: 10px;'>
+                    <table class='small striped bordered centered responsive-table'>
+                    <thead>
+                      <tr>
+                        <th>Talento</th>
+                        <th>Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+
+      if ($pt_lenght > 0) {
+        for ($n = 0; $n < $pt_lenght; $n++) {
+          echo
+            "
+                        <tr>
+                          
+                            <td>" . $pertalent[$n][2] . "</td> 
+                            <td style='text-align:center;'>
+                              <form id='rmAfiliadoHobby' action='UpdateAfiliadoView.php' method='POST'>
+                                  <div class='row'>
+                                      <input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>
+                                      <input name='id_hobby' value='" . $pertalent[$n][1] . "' type='text' hidden>
+                                      <button title='Eliminar talento' class='btn btn-small waves-effect waves-light red' type='submit' value='rmHobby' name='rmHobby'>
+                                        <i class='material-icons'>delete</i>
+                                      </button>
+                                  </div>
+                                </form>
+                            </td>
+                        </tr>";
+        }
+      }
+              echo "</tbody>
+                  </table>
+                </div>
             </div>
+          </div>";
+          //FIN HOBBY
+          echo "<br><div class='divider'></div><br>";
+          //OCUPACION
+      echo "<div class='row'>
+              <form id='AfiliadoInterest' action='UpdateAfiliadoView.php' method='POST'>
+                <div class='input-field col s4'>
+                    <select name='id_interest'>
+                      <option value='' disabled selected>Agregue una ocupación</option>";
+            for($k=0;$k<$i_lenght;$k++){
+                echo "<option value='".$interest[$k][1]."'>".$interest[$k][2]."</option>";
+            }
+                echo "<input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>";
+              echo "</select>
+                    <label>Ocupaciones</label>
+                </div>
+                <div class='input-field col s2'>
+                    <button class='btn btn-block waves-effect waves-light btn-small blue darken-4' type='submit' value='addInterest' name='addInterest'>Agregar
+                      <i class='material-icons right'>add_circle</i>
+                    </button>
+                </div>
+              </form>
+              <div class='input-field col s6'>
+                    <div class='row' style='height: 30vh;
+                    overflow-y: scroll;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    margin-bottom: 10px;
+                    padding: 10px;'>
+                    <table class='small striped bordered centered responsive-table'>
+                    <thead>
+                      <tr>
+                        <th>Ocupación</th>
+                        <th>Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+
+      if ($pi_lenght > 0) {
+        for ($n = 0; $n < $pi_lenght; $n++) {
+          echo
+            "
+                        <tr>
+                          
+                            <td>" . $perint[$n][2] . "</td> 
+                            <td style='text-align:center;'>
+                              <form id='rmAfiliadoInterest' action='UpdateAfiliadoView.php' method='POST'>
+                                <input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>
+                                <input name='id_interest' value='" . $perint[$n][1] . "' type='text' hidden>
+                                  <div class='row'>
+                                      <button title='Eliminar ocupación' class='btn btn-small waves-effect waves-light red' type='submit' value='rmInterest' name='rmInterest'>
+                                        <i class='material-icons'>delete</i>
+                                      </button>
+                                  </div>
+                              </form>
+                            </td>
+
+                        </tr>";
+        }
+      }
+              echo "</tbody>
+                  </table>
+                </div>
+              
+            </div>
+          </div>";
+          //FIN OCUPACION
+          echo "<br><div class='divider'></div><br>";
+          //Contacto
+      echo "<div class='row'>
+              <form id='AfiliadoInterest' action='UpdateAfiliadoView.php' method='POST'>
+                <div class='input-field col s4'>
+                  <input id='tel_phone' name='tel_phone' type='text' autocomplete='off'>
+                  <label for='tel_phone'>Teléfonos de Contacto</label>
+                  <input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>
+                </div>
+                <div class='input-field col s2'>
+                    <button class='btn btn-block waves-effect waves-light btn-small blue darken-4' type='submit' value='addContact' name='addContact'>Agregar
+                      <i class='material-icons right'>add_circle</i>
+                    </button>
+                </div>
+              </form>
+              <div class='input-field col s6'>
+                    <div class='row' style='height: 30vh;
+                    overflow-y: scroll;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    margin-bottom: 10px;
+                    padding: 10px;'>
+                    <table class='small striped bordered centered responsive-table'>
+                    <thead>
+                      <tr>
+                        <th>Teléfonos</th>
+                        <th>Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+
+      if ($tel_lenght > 0) {
+        for ($k = 0; $k < $tel_lenght; $k++) {
+          echo
+            "
+                        <tr>
+                          
+                            <td>" . $contacts[$k][2] . "</td> 
+                            <td style='text-align:center;'>
+                              <form id='rmAfiliadoInterest' action='UpdateAfiliadoView.php' method='POST'>
+                                <input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>
+                                <input name='tel_phone' value='" . $contacts[$k][2] . "' type='text' hidden>
+                                  <div class='row'>
+                                      <button title='Eliminar teléfono' class='btn btn-small waves-effect waves-light red' type='submit' value='rmContact' name='rmContact'>
+                                        <i class='material-icons'>delete</i>
+                                      </button>
+                                  </div>
+                              </form>
+                            </td>
+
+                        </tr>";
+        }
+      }
+              echo "</tbody>
+                  </table>
+                </div>
+              
+            </div>
+          </div>";
+          //FIN Contacto
+          
+
+          echo "</div>
         </div>
       </div>
-    </div>
     </main>
     <!--JavaScript at end of body for optimized loading-->
     <script type='text/javascript' src='../materialize/js/materialize.min.js'></script>

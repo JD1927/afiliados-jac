@@ -14,7 +14,7 @@ if($_POST['edit'] == 'edit'){
 }
 //Listar ocupaciones
 $oTalent = new TalentModel(null, null);
-$oCtrTalent = new ctrTalent($oTalent);
+$oCtrTalent = new ctrTalent($oTalent, null);
 $talent = $oCtrTalent->talent_list();
 $t_lenght = count($talent);
   //create
@@ -23,7 +23,7 @@ if ($_POST["create"] == "create") {
     //setting values
     $description = $_POST['description'];
     $oTalent = new TalentModel(null, $description);
-    $oCtrTalent = new ctrTalent($oTalent);
+    $oCtrTalent = new ctrTalent($oTalent, null);
 
     $oCtrTalent->create();
     //Esta variable se usa para mostrar un mensaje de alerta
@@ -43,7 +43,7 @@ if ($_POST["update"] == "update") {
     $code = $_POST['code'];
     $description = $_POST['description'];
     $oTalent = new TalentModel($code, $description);
-    $oCtrTalent = new ctrTalent($oTalent);
+    $oCtrTalent = new ctrTalent($oTalent, null);
     if ($oCtrTalent->update()) {
       echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
     } else {
@@ -60,7 +60,7 @@ if ($_POST['delete'] == 'delete') {
 
     $code = $_POST['code'];
     $oTalent = new TalentModel($code, null);
-    $oCtrTalent = new ctrTalent($oTalent);
+    $oCtrTalent = new ctrTalent($oTalent, null);
 
     if ($oCtrTalent->delete()) {
       echo("<script>alert('¡La acción se realizó exitosamente!');</script>");

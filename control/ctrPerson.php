@@ -146,7 +146,7 @@ class ctrPerson
       INNER JOIN N_ACADEMICO NA
       ON P.COD_NACADEMICO = NA.CODIGO
       WHERE P.COD_TPERSONA = 1
-    AND P.IDENTIFICACION = ".$id."";
+    AND P.IDENTIFICACION = " . $id . "";
             //  echo " Comando SQL : ". $select;
     //Obtiene los registros de la consulta
     $recordSet = $oConnection->executeSQL($bd, $select);
@@ -185,13 +185,35 @@ class ctrPerson
   {
     //Obtiene los valores ingresados en la vista
     $id = $this->oPerson->getId();
-    $description = $this->oPerson->getDescription();
+    $id_type = $this->oPerson->getIdType();
+    $fullname = $this->oPerson->getFullname();
+    $cod_tper = $this->oPerson->getCodTper();
+    $birth_date = $this->oPerson->getBirthDate();
+    $address = $this->oPerson->getAddress();
+    $email = $this->oPerson->getEmail();
+    $cod_gender = $this->oPerson->getCodGender();
+    $cod_health = $this->oPerson->getCodHealth();
+    $cod_thealth = $this->oPerson->getCodTHealth();
+    $cod_committee = $this->oPerson->getCodCommittee();
+    $cod_knowledge = $this->oPerson->getCodKnowledge();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
     $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
     $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
 		//--------------Se ejecuta Comando SQL-------------------------
-    $update = "UPDATE HOBBY SET DESCRIPCION ='" . $description . "' WHERE CODIGO=" . $code . "";
+    $update = "UPDATE `persona` 
+    SET `TIPO_ID` = ".$id_type.", 
+    `N_COMPLETO` = '".$fullname."',  
+    `COD_TPERSONA` = ".$cod_tper.", 
+    `F_NACIMIENTO` = '".$birth_date."',
+    `DIRECCION` = '".$address."', 
+    `EMAIL` = '".$email."', 
+    `COD_GENERO` = ".$cod_gender.", 
+    `COD_SALUD` = ".$cod_health.", 
+    `COD_TSALUD` = ".$cod_thealth.", 
+    `COD_COMITE` = ".$cod_committee.", 
+    `COD_NACADEMICO` = ".$cod_knowledge." 
+    WHERE `persona`.`IDENTIFICACION` = ".$id."";
     $recordSet = $oConnection->executeSQL($bd, $update);
     $oConnection->close($link);
 		//--------------VERIFICAMOS SI SE REALIZO LA select--------------------------------------------------
@@ -213,12 +235,21 @@ class ctrPerson
     $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
             
 		//--------------Se ejecuta Comando SQL-------------------------
-    $delete = "DELETE FROM persona where IDENTIFICACION =" . $id . "";
-    $recordSet = $oConnection->executeSQL($bd, $delete);
+    $delete1 = "DELETE FROM persona where IDENTIFICACION =" . $id . "";
+    $recordSet1 = $oConnection->executeSQL($bd, $delete1);
+
+    $delete2 = "DELETE FROM tel_persona where IDPERSONA =" . $id . "";
+    $recordSet2 = $oConnection->executeSQL($bd, $delete2);
+
+    $delete3 = "DELETE FROM per_hobby where IDPERSONA =" . $id . "";
+    $recordSet3 = $oConnection->executeSQL($bd, $delete3);
+
+    $delete4 = "DELETE FROM per_ocupacion where IDPERSONA =" . $id . "";
+    $recordSet4 = $oConnection->executeSQL($bd, $delete4);
 
     $oConnection->close($link);
 		//--------------VERIFICAMOS SI SE REALIZO LA select--------------------------------------------------
-    if (!$recordSet) {
+    if (!$recordSet1) {
       die(" ERROR CON EL COMANDO SQL: " . mysql_error());
     } else {
 			//----------AL RESULTADO QUE SE VA A RETORNAR = RESULTADO DE LA select---------------
