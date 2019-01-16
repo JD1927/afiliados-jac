@@ -5,8 +5,6 @@ include("../model/PersonModel.php");
 include("../control/ctrPerson.php");
 include("../model/HealthModel.php");
 include("../control/ctrHealth.php");
-include("../model/CommitteeModel.php");
-include("../control/ctrCommittee.php");
 include("../model/TalentModel.php");
 include("../control/ctrTalent.php");
 include("../model/InterestModel.php");
@@ -15,11 +13,6 @@ include("../model/ContactModel.php");
 include("../control/ctrContact.php");
 include("../control/ctrConnection.php");
 //Variables
-//Listar comités
-$oCommittee = new CommitteeModel(null, null);
-$oCtrCommittee = new ctrCommittee($oCommittee);
-$committe = $oCtrCommittee->committee_list();
-$c_lenght = count($committe);
 
 //Listar entidades de salud
 $oHealth = new HealthModel(null, null);
@@ -44,6 +37,11 @@ $i = 0;
   //delete
 if ($_POST['edit'] == 'edit') {
   try {
+    //Listar personas
+    $oPerson = new PersonModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oCtrPerson = new ctrPerson($oPerson);
+    $id_personas = $oCtrPerson->id_personas();
+    $id_lenght = count($id_personas);
 
     $id = $_POST['id_update'];
     $oPerson = new PersonModel($id, null, null, null, null, null, null, null, null, null, null, null, null, null);
@@ -60,12 +58,12 @@ if ($_POST['edit'] == 'edit') {
     $pi_lenght = count($perint);
 
     $oContact = new ContactModel(null);
-    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $oCtrContact = new ctrContact($oContact, $oPerson);
     $contacts = $oCtrContact->contact_list();
     $tel_lenght = count($contacts);
 
-    $afiliados = $oCtrPerson->afiliado_detail();
-    $a_lenght = count($afiliados);
+    $familiar = $oCtrPerson->familiar_detail();
+    $f_lenght = count($familiar);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -73,10 +71,10 @@ if ($_POST['edit'] == 'edit') {
 
 if ($_POST['addHobby'] == 'addHobby') {
   try {
-    $id_afiliado = $_POST['id_afiliado'];
+    $id_familiar = $_POST['id_familiar'];
     $id_hobby = $_POST['id_hobby'];
 
-    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oPerson = new PersonModel($id_familiar, null, null, null, null, null, null, null, null, null, null, null, null, null);
     $oCtrPerson = new ctrPerson($oPerson);
 
     $oTalent = new TalentModel($id_hobby, null);
@@ -93,12 +91,12 @@ if ($_POST['addHobby'] == 'addHobby') {
     $pi_lenght = count($perint);
 
     $oContact = new ContactModel(null);
-    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $oCtrContact = new ctrContact($oContact, $oPerson);
     $contacts = $oCtrContact->contact_list();
     $tel_lenght = count($contacts);
 
-    $afiliados = $oCtrPerson->afiliado_detail();
-    $a_lenght = count($afiliados);
+    $familiar = $oCtrPerson->familiar_detail();
+    $f_lenght = count($familiar);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -106,10 +104,10 @@ if ($_POST['addHobby'] == 'addHobby') {
 
 if ($_POST['rmHobby'] == 'rmHobby') {
   try {
-    $id_afiliado = $_POST['id_afiliado'];
+    $id_familiar = $_POST['id_familiar'];
     $id_hobby = $_POST['id_hobby'];
 
-    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oPerson = new PersonModel($id_familiar, null, null, null, null, null, null, null, null, null, null, null, null, null);
     $oCtrPerson = new ctrPerson($oPerson);
 
     $oTalent = new TalentModel($id_hobby, null);
@@ -126,12 +124,12 @@ if ($_POST['rmHobby'] == 'rmHobby') {
     $pi_lenght = count($perint);
 
     $oContact = new ContactModel(null);
-    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $oCtrContact = new ctrContact($oContact, $oPerson);
     $contacts = $oCtrContact->contact_list();
     $tel_lenght = count($contacts);
 
-    $afiliados = $oCtrPerson->afiliado_detail();
-    $a_lenght = count($afiliados);
+    $familiar = $oCtrPerson->familiar_detail();
+    $f_lenght = count($familiar);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -139,10 +137,10 @@ if ($_POST['rmHobby'] == 'rmHobby') {
 
 if ($_POST['addInterest'] == 'addInterest') {
   try {
-    $id_afiliado = $_POST['id_afiliado'];
+    $id_familiar = $_POST['id_familiar'];
     $id_int = $_POST['id_interest'];
 
-    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oPerson = new PersonModel($id_familiar, null, null, null, null, null, null, null, null, null, null, null, null, null);
     $oCtrPerson = new ctrPerson($oPerson);
 
     $oInterest = new InterestModel($id_int, null);
@@ -159,12 +157,12 @@ if ($_POST['addInterest'] == 'addInterest') {
     $pi_lenght = count($perint);
 
     $oContact = new ContactModel(null);
-    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $oCtrContact = new ctrContact($oContact, $oPerson);
     $contacts = $oCtrContact->contact_list();
     $tel_lenght = count($contacts);
 
-    $afiliados = $oCtrPerson->afiliado_detail();
-    $a_lenght = count($afiliados);
+    $familiar = $oCtrPerson->familiar_detail();
+    $f_lenght = count($familiar);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -172,10 +170,10 @@ if ($_POST['addInterest'] == 'addInterest') {
 
 if ($_POST['rmInterest'] == 'rmInterest') {
   try {
-    $id_afiliado = $_POST['id_afiliado'];
+    $id_familiar = $_POST['id_familiar'];
     $id_interest = $_POST['id_interest'];
 
-    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oPerson = new PersonModel($id_familiar, null, null, null, null, null, null, null, null, null, null, null, null, null);
     $oCtrPerson = new ctrPerson($oPerson);
 
     $oInterest = new InterestModel($id_interest, null);
@@ -192,12 +190,12 @@ if ($_POST['rmInterest'] == 'rmInterest') {
     $pi_lenght = count($perint);
 
     $oContact = new ContactModel(null);
-    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $oCtrContact = new ctrContact($oContact, $oPerson);
     $contacts = $oCtrContact->contact_list();
     $tel_lenght = count($contacts);
 
-    $afiliados = $oCtrPerson->afiliado_detail();
-    $a_lenght = count($afiliados);
+    $familiar = $oCtrPerson->familiar_detail();
+    $f_lenght = count($familiar);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -205,14 +203,14 @@ if ($_POST['rmInterest'] == 'rmInterest') {
 
 if ($_POST['addContact'] == 'addContact') {
   try {
-    $id_afiliado = $_POST['id_afiliado'];
+    $id_familiar = $_POST['id_familiar'];
     $tel_phone = $_POST['tel_phone'];
 
-    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oPerson = new PersonModel($id_familiar, null, null, null, null, null, null, null, null, null, null, null, null, null);
     $oCtrPerson = new ctrPerson($oPerson);
 
     $oContact = new ContactModel($tel_phone);
-    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $oCtrContact = new ctrContact($oContact, $oPerson);
 
     $oCtrContact->addContact();
 
@@ -229,8 +227,8 @@ if ($_POST['addContact'] == 'addContact') {
     $contacts = $oCtrContact->contact_list();
     $tel_lenght = count($contacts);
 
-    $afiliados = $oCtrPerson->afiliado_detail();
-    $a_lenght = count($afiliados);
+    $familiar = $oCtrPerson->familiar_detail();
+    $f_lenght = count($familiar);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -238,14 +236,14 @@ if ($_POST['addContact'] == 'addContact') {
 
 if ($_POST['rmContact'] == 'rmContact') {
   try {
-    $id_afiliado = $_POST['id_afiliado'];
+    $id_familiar = $_POST['id_familiar'];
     $tel_phone = $_POST['tel_phone'];
 
-    $oPerson = new PersonModel($id_afiliado, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    $oPerson = new PersonModel($id_familiar, null, null, null, null, null, null, null, null, null, null, null, null, null);
     $oCtrPerson = new ctrPerson($oPerson);
 
     $oContact = new ContactModel($tel_phone);
-    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $oCtrContact = new ctrContact($oContact, $oPerson);
 
     $oCtrContact->rmContact();
 
@@ -262,8 +260,8 @@ if ($_POST['rmContact'] == 'rmContact') {
     $contacts = $oCtrContact->contact_list();
     $tel_lenght = count($contacts);
 
-    $afiliados = $oCtrPerson->afiliado_detail();
-    $a_lenght = count($afiliados);
+    $familiar = $oCtrPerson->familiar_detail();
+    $f_lenght = count($familiar);
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
   }
@@ -281,11 +279,25 @@ if ($_POST["update"] == "update") {
     $cod_gender = $_POST['cod_gender'];
     $cod_health = $_POST['cod_health'];
     $cod_thealth = $_POST['cod_thealth'];
-    $cod_committee = $_POST['cod_committee'];
+    $cod_committee = null;
     $cod_knowledge = $_POST['cod_knowledge'];
+    $id_familiar = $_POST['id_person'];
 
-    $oPerson = new PersonModel($id,$id_type,$fullname,1,$birth_date,$address,
-		$email,$cod_gender,$cod_health,	$cod_thealth,	$cod_committee,$cod_knowledge,null);
+    $oPerson = new PersonModel(
+      $id,
+      $id_type,
+      $fullname,
+      2,
+      $birth_date,
+      $address,
+      $email,
+      $cod_gender,
+      $cod_health,
+      $cod_thealth,
+      $cod_committee,
+      $cod_knowledge,
+      $id_familiar
+    );
     $oCtrPerson = new ctrPerson($oPerson);
 
     $oCtrPerson->update();
@@ -301,12 +313,12 @@ if ($_POST["update"] == "update") {
     $pi_lenght = count($perint);
 
     $oContact = new ContactModel(null);
-    $oCtrContact = new ctrContact($oContact,$oPerson);
+    $oCtrContact = new ctrContact($oContact, $oPerson);
     $contacts = $oCtrContact->contact_list();
     $tel_lenght = count($contacts);
 
-    $afiliados = $oCtrPerson->afiliado_detail();
-    $a_lenght = count($afiliados);
+    $familiar = $oCtrPerson->familiar_detail();
+    $f_lenght = count($familiar);
 
   } catch (Exception $exp) {
     echo "ERROR ....R " . $exp->getMessage() . "\n";
@@ -324,7 +336,7 @@ if ($_POST['delete'] == 'delete') {
 
     if ($oCtrPerson->delete()) {
       echo ("<script>alert('¡La persona con identificación: " . $id . " ha sido eliminado exitosamente!');</script>");
-      header('Location: AfiliadosView.php');
+      header('Location: FamiliarsView.php');
     } else {
       echo ("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
     }
@@ -344,7 +356,7 @@ echo "
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='msapplication-tap-highlight' content='no'>
     <meta name='description' content=''>
-    <title>Afiliados - JAC</title>
+    <title>Familiares - JAC</title>
     <link href='https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css' rel='stylesheet'>
     <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/jqvmap.css?7221760363237152919' rel='stylesheet'>
     <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/flag-icon.min.css?7221760363237152919' rel='stylesheet'>
@@ -472,7 +484,7 @@ echo "
     <header>
       <div class='navbar-fixed'>
         <nav class='navbar white'>
-          <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Afiliados</a>
+          <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Familiares</a>
             <ul id='nav-mobile' class='right'>
               <li class='hide-on-med-and-down'>
                 <a class='dropdown-trigger waves-effect' href='#' data-target='people'>Personas</a>
@@ -516,10 +528,10 @@ echo "
       <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
         <br>
         <div class='row'>
-            <h5 style='text-align:center'>Afiliado " . $afiliados[$i][1] . "</h5>
+            <h5 style='text-align:center'>Familiar " . $familiar[$i][1] . "</h5>
         </div>
         <div class='row'>
-          <form id='updateAfiliado' class='col s12' action='UpdateAfiliadoView.php' method='POST'>
+          <form id='updateFamiliar' class='col s12' action='UpdateFamiliarView.php' method='POST'>
             <div style='text-align: center' class='container input-field col s12'>
               <button title='Actualizar información' class='btn waves-effect waves-light' type='submit' value='update' name='update'>Actualizar
                 <i class='material-icons right'>edit</i>
@@ -527,12 +539,12 @@ echo "
             </div>
             <div class='row'>
               <div class='input-field col s6'>
-                <input id='id' name='id' type='text' value='" . $afiliados[$i][1] . "' autocomplete='off' readonly>
+                <input id='id' name='id' type='text' value='" . $familiar[$i][1] . "' autocomplete='off' readonly>
                 <label for='id'>Número Identificación</label>
               </div>
               <div class='input-field col s6'>
                   <select name='id_type'>
-                    <option value='" . $afiliados[$i][2] . "' selected>" . $afiliados[$i][3] . "</option>
+                    <option value='" . $familiar[$i][2] . "' selected>" . $familiar[$i][3] . "</option>
                     <option value='1'>Registro Civil</option>
                     <option value='2'>Tarjeta de Identidad</option>
                     <option value='3'>Cédula de Ciudadanía</option>
@@ -544,19 +556,19 @@ echo "
 
             <div class='row'>
               <div class='input-field col s12'>
-                <input id='fullname' name='fullname' type='text' value='" . $afiliados[$i][4] . "' autocomplete='off'>
+                <input id='fullname' name='fullname' type='text' value='" . $familiar[$i][4] . "' autocomplete='off'>
                 <label for='fullname'>Nombre Completo</label>
               </div>
             </div>
 
             <div class='row'>
               <div class='input-field col s6'>
-                <input id='birth_date' name='birth_date' type='date' value='" . $afiliados[$i][5] . "'>
+                <input id='birth_date' name='birth_date' type='date' value='" . $familiar[$i][5] . "'>
                 <label for='birth_date'>Fecha de Nacimiento</label>
               </div>
               <div class='input-field col s6'>
                   <select name='cod_gender'>
-                    <option value='" . $afiliados[$i][9] . "' selected>" . $afiliados[$i][10] . "</option>
+                    <option value='" . $familiar[$i][9] . "' selected>" . $familiar[$i][10] . "</option>
                     <option value='1'>Masculino</option>
                     <option value='2'>Femenino</option>
                   </select>
@@ -566,11 +578,11 @@ echo "
 
             <div class='row'>
               <div class='input-field col s6'>
-                <input id='address' name='address' type='text' value='" . $afiliados[$i][7] . "' autocomplete='off'>
+                <input id='address' name='address' type='text' value='" . $familiar[$i][7] . "' autocomplete='off'>
                 <label for='address'>Dirección</label>
               </div>
               <div class='input-field col s6'>
-                <input id='email' name='email' type='email' value='" . $afiliados[$i][8] . "' autocomplete='off'>
+                <input id='email' name='email' type='email' value='" . $familiar[$i][8] . "' autocomplete='off'>
                 <label for='email'>Correo Electrónico</label>
               </div>
             </div>
@@ -578,16 +590,16 @@ echo "
             <div class='row'>
               <div class='input-field col s6'>
                   <select name='cod_health'>
-                    <option value='" . $afiliados[$i][11] . "' selected> " . $afiliados[$i][12] . "</option>";
+                    <option value='" . $familiar[$i][11] . "' selected> " . $familiar[$i][12] . "</option>";
 for ($n = 0; $n < $h_lenght; $n++) {
-  echo "<option value='" . $health[$n][1] . "'>" . $health[$n][2] . "</option>";//Lista de Comités
+  echo "<option value='" . $health[$n][1] . "'>" . $health[$n][2] . "</option>";
 }
 echo "</select>
                   <label>EPS</label>
               </div>
               <div class='input-field col s6'>
                   <select name='cod_thealth'>
-                    <option value='" . $afiliados[$i][13] . "' selected>" . $afiliados[$i][14] . " </option>
+                    <option value='" . $familiar[$i][13] . "' selected>" . $familiar[$i][14] . " </option>
                     <option value='1'>Cotizante</option>
                     <option value='2'>Beneficiario</option>
                     <option value='3'>Subsidiado</option>
@@ -598,17 +610,8 @@ echo "</select>
 
             <div class='row'>
               <div class='input-field col s6'>
-                  <select name='cod_committee'>
-                    <option value='" . $afiliados[$i][15] . "' selected>" . $afiliados[$i][16] . "</option>";
-for ($n = 0; $n < $c_lenght; $n++) {
-  echo "<option value='" . $committe[$n][1] . "'>" . $committe[$n][2] . "</option>";//Lista de Comités
-}
-echo "</select>
-                  <label>Cómité</label>
-              </div>
-              <div class='input-field col s6'>
                   <select name='cod_knowledge'>
-                    <option value='" . $afiliados[$i][17] . "' selected>" . $afiliados[$i][18] . "</option>
+                    <option value='" . $familiar[$i][15] . "' selected>" . $familiar[$i][16] . "</option>
                     <option value='1'>Preescolar</option>
                     <option value='2'>Primaria</option>
                     <option value='3'>Secundaria</option>
@@ -624,19 +627,28 @@ echo "</select>
                   </select>
                   <label>Nivel Académico</label>
               </div>
+              <div class='input-field col s6'>
+                  <select name='id_person'>
+                    <option value='" . $familiar[$i][17] . "' selected>" . $familiar[$i][18] . "</option>";
+for ($m = 0; $m < $id_lenght; $m++) {
+  echo "<option value='" . $id_personas[$m][1] . "'>" . $id_personas[$m][2] . "</option>";//Lista de Comité
+}
+echo "</select>
+                  <label>Familiar</label>
+              </div>
             </div>";
-            echo "<br><div class='divider'></div><br>";
+echo "<br><div class='divider'></div><br>";
       //HOBBY
-      echo "<div class='row'>
-              <form id='AfiliadoHobby' action='UpdateAfiliadoView.php' method='POST'>
+echo "<div class='row'>
+              <form id='FamiliarHobby' action='UpdateFamiliarView.php' method='POST'>
                 <div class='input-field col s4'>
                     <select name='id_hobby'>
                       <option value='' disabled selected>Agregue un talento</option>";
-            for($j=0;$j<$t_lenght;$j++){
-                echo "<option value='".$talents[$j][1]."'>".$talents[$j][2]."</option>";
-            }
-                echo "<input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>";
-              echo "</select>
+for ($j = 0; $j < $t_lenght; $j++) {
+  echo "<option value='" . $talents[$j][1] . "'>" . $talents[$j][2] . "</option>";
+}
+echo "<input name='id_familiar' value='" . $familiar[$i][1] . "' type='text' hidden>";
+echo "</select>
                     <label>Talentos</label>
                 </div>
                 <div class='input-field col s2'>
@@ -661,17 +673,17 @@ echo "</select>
                     </thead>
                     <tbody>";
 
-      if ($pt_lenght > 0) {
-        for ($n = 0; $n < $pt_lenght; $n++) {
-          echo
-            "
+if ($pt_lenght > 0) {
+  for ($n = 0; $n < $pt_lenght; $n++) {
+    echo
+      "
                         <tr>
                           
                             <td>" . $pertalent[$n][2] . "</td> 
                             <td style='text-align:center;'>
-                              <form id='rmAfiliadoHobby' action='UpdateAfiliadoView.php' method='POST'>
+                              <form id='rmFamiliarHobby' action='UpdateFamiliarView.php' method='POST'>
                                   <div class='row'>
-                                      <input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>
+                                      <input name='id_familiar' value='" . $familiar[$i][1] . "' type='text' hidden>
                                       <input name='id_hobby' value='" . $pertalent[$n][1] . "' type='text' hidden>
                                       <button title='Eliminar talento' class='btn btn-small waves-effect waves-light red' type='submit' value='rmHobby' name='rmHobby'>
                                         <i class='material-icons'>delete</i>
@@ -680,26 +692,26 @@ echo "</select>
                                 </form>
                             </td>
                         </tr>";
-        }
-      }
-              echo "</tbody>
+  }
+}
+echo "</tbody>
                   </table>
                 </div>
             </div>
           </div>";
           //FIN HOBBY
-          echo "<br><div class='divider'></div><br>";
+echo "<br><div class='divider'></div><br>";
           //OCUPACION
-      echo "<div class='row'>
-              <form id='AfiliadoInterest' action='UpdateAfiliadoView.php' method='POST'>
+echo "<div class='row'>
+              <form id='FamiliarInterest' action='UpdateFamiliarView.php' method='POST'>
                 <div class='input-field col s4'>
                     <select name='id_interest'>
                       <option value='' disabled selected>Agregue una ocupación</option>";
-            for($k=0;$k<$i_lenght;$k++){
-                echo "<option value='".$interest[$k][1]."'>".$interest[$k][2]."</option>";
-            }
-                echo "<input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>";
-              echo "</select>
+for ($k = 0; $k < $i_lenght; $k++) {
+  echo "<option value='" . $interest[$k][1] . "'>" . $interest[$k][2] . "</option>";
+}
+echo "<input name='id_familiar' value='" . $familiar[$i][1] . "' type='text' hidden>";
+echo "</select>
                     <label>Ocupaciones</label>
                 </div>
                 <div class='input-field col s2'>
@@ -724,16 +736,16 @@ echo "</select>
                     </thead>
                     <tbody>";
 
-      if ($pi_lenght > 0) {
-        for ($n = 0; $n < $pi_lenght; $n++) {
-          echo
-            "
+if ($pi_lenght > 0) {
+  for ($n = 0; $n < $pi_lenght; $n++) {
+    echo
+      "
                         <tr>
                           
                             <td>" . $perint[$n][2] . "</td> 
                             <td style='text-align:center;'>
-                              <form id='rmAfiliadoInterest' action='UpdateAfiliadoView.php' method='POST'>
-                                <input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>
+                              <form id='rmFamiliarInterest' action='UpdateFamiliarView.php' method='POST'>
+                                <input name='id_familiar' value='" . $familiar[$i][1] . "' type='text' hidden>
                                 <input name='id_interest' value='" . $perint[$n][1] . "' type='text' hidden>
                                   <div class='row'>
                                       <button title='Eliminar ocupación' class='btn btn-small waves-effect waves-light red' type='submit' value='rmInterest' name='rmInterest'>
@@ -744,23 +756,23 @@ echo "</select>
                             </td>
 
                         </tr>";
-        }
-      }
-              echo "</tbody>
+  }
+}
+echo "</tbody>
                   </table>
                 </div>
               
             </div>
           </div>";
           //FIN OCUPACION
-          echo "<br><div class='divider'></div><br>";
+echo "<br><div class='divider'></div><br>";
           //Contacto
-      echo "<div class='row'>
-              <form id='AfiliadoInterest' action='UpdateAfiliadoView.php' method='POST'>
+echo "<div class='row'>
+              <form id='FamiliarInterest' action='UpdateFamiliarView.php' method='POST'>
                 <div class='input-field col s4'>
                   <input id='tel_phone' name='tel_phone' type='text' autocomplete='off'>
                   <label for='tel_phone'>Teléfonos de Contacto</label>
-                  <input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>
+                  <input name='id_familiar' value='" . $familiar[$i][1] . "' type='text' hidden>
                 </div>
                 <div class='input-field col s2'>
                     <button class='btn btn-block waves-effect waves-light btn-small blue darken-4' type='submit' value='addContact' name='addContact'>Agregar
@@ -784,16 +796,16 @@ echo "</select>
                     </thead>
                     <tbody>";
 
-      if ($tel_lenght > 0) {
-        for ($k = 0; $k < $tel_lenght; $k++) {
-          echo
-            "
+if ($tel_lenght > 0) {
+  for ($k = 0; $k < $tel_lenght; $k++) {
+    echo
+      "
                         <tr>
                           
                             <td>" . $contacts[$k][2] . "</td> 
                             <td style='text-align:center;'>
-                              <form id='rmAfiliadoInterest' action='UpdateAfiliadoView.php' method='POST'>
-                                <input name='id_afiliado' value='" . $afiliados[$i][1] . "' type='text' hidden>
+                              <form id='rmFamiliarInterest' action='UpdateFamiliarView.php' method='POST'>
+                                <input name='id_familiar' value='" . $familiar[$i][1] . "' type='text' hidden>
                                 <input name='tel_phone' value='" . $contacts[$k][2] . "' type='text' hidden>
                                   <div class='row'>
                                       <button title='Eliminar teléfono' class='btn btn-small waves-effect waves-light red' type='submit' value='rmContact' name='rmContact'>
@@ -804,18 +816,18 @@ echo "</select>
                             </td>
 
                         </tr>";
-        }
-      }
-              echo "</tbody>
+  }
+}
+echo "</tbody>
                   </table>
                 </div>
               
             </div>
           </div>";
           //FIN Contacto
-          
 
-          echo "</div>
+
+echo "</div>
         </div>
       </div>
     </main>

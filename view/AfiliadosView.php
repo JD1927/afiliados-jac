@@ -37,7 +37,7 @@ echo "
   <!--Fontawesome-->
   <link href='../fontawesome-free-5.5.0-web/css/all.min.css' rel='stylesheet'>
   <!--load all styles -->
-
+  <link rel='shortcut icon' href='../Util/images/puerta-del-sol.jpg'>
   <meta id='shopify-digital-wallet' name='shopify-digital-wallet' content='/17758583/digital_wallets/dialog'>
   <meta name='shopify-checkout-api-token' content='6aacc581eb2b41d74f03c38d3c985dba'>
 
@@ -183,7 +183,8 @@ echo "
     <!-- REPORTERÍA -->
     <div id='reports' class='dropdown-content'>
       <ul>
-
+        <li><a href='../control/ctrJACReport.php'>Afiliados JAC</a></li>
+        <li><a href='../control/ctrPersonReport.php'>Personas Urb. Puerta del Sol</a></li>
       </ul>
     </div>
   </header>
@@ -214,9 +215,9 @@ echo "
             <tr>
               <th>Identificación</th>
               <th>Nombre Completo</th>
-              <th>Fecha Nacimiento</th>
               <th>Edad</th>
               <th>Dirección</th>
+              <th>Teléfono</th>
               <th>Comité</th>
               <th>Acciones</th>
             </tr>
@@ -230,21 +231,13 @@ echo "
                 
                   <td>". $afiliados[$i][1] ."</td> 
                   <td>". $afiliados[$i][2] ."</td>
-                  <td>". $afiliados[$i][3] ."</td>
                   <td>". $afiliados[$i][4] ."</td>
                   <td>". $afiliados[$i][5] ."</td>
                   <td>". $afiliados[$i][6] ."</td>
+                  <td>". $afiliados[$i][7] ."</td>
                   <td style='text-align:center'>
                   <div class='row'>
-                    <div class='col s4'>
-                      <form id='afiliado_view' name='afiliado_view' action='AfiliadoDetail.php' method='POST'>
-                        <input name='id_afiliado' value='".$afiliados[$i][1]."' type='text' hidden>
-                        <button title='Ver información detallada' class='btn btn-small waves-effect waves-light' type='submit' value='view' name='view'>
-                          <i class='material-icons'>perm_identity</i>
-                        </button>
-                      </form>
-                    </div>
-                    <div class='col s8'>
+                    <div class='col'>
                       <form id='afiliado_update' name='create' action='UpdateAfiliadoView.php' method='POST'>
                         <input name='id_update' value='".$afiliados[$i][1]."' type='text' hidden>
                         <button title='Actualizar información' class='btn btn-small waves-effect waves-light yellow' type='submit' value='edit' name='edit'>

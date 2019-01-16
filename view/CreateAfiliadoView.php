@@ -76,7 +76,7 @@ echo "
   <!--Fontawesome-->
   <link href='../fontawesome-free-5.5.0-web/css/all.min.css' rel='stylesheet'>
   <!--load all styles -->
-
+  <link rel='shortcut icon' href='../Util/images/puerta-del-sol.jpg'>
   <meta id='shopify-digital-wallet' name='shopify-digital-wallet' content='/17758583/digital_wallets/dialog'>
   <meta name='shopify-checkout-api-token' content='6aacc581eb2b41d74f03c38d3c985dba'>
 
@@ -222,7 +222,8 @@ echo "
     <!-- REPORTERÍA -->
     <div id='reports' class='dropdown-content'>
       <ul>
-
+        <li><a href='../control/ctrJACReport.php'>Afiliados JAC</a></li>
+        <li><a href='../control/ctrPersonReport.php'>Personas Urb. Puerta del Sol</a></li>
       </ul>
     </div>
   </header>

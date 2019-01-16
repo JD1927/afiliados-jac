@@ -1,79 +1,17 @@
 <?php
 error_reporting(0);
 //Incluye código 
-include("../model/HealthModel.php");
-include("../control/ctrHealth.php");
+include("../model/PersonModel.php");
+include("../control/ctrPerson.php");
 include("../control/ctrConnection.php");
 //Variables
-$code = "";
-$company = "";
 
-if($_POST['edit'] == 'edit'){
-  $code = $_POST['code'];
-  $company = $_POST['company'];
-}
-//Listar entidades de salud
-$oHealth = new HealthModel(null, null);
-$oCtrHealth = new ctrHealth($oHealth);
-$health = $oCtrHealth->health_list();
-$h_lenght = count($health);
-  //create
-if ($_POST["create"] == "create") {
-  try {
-    //setting values
-    $company = $_POST['health'];
-    $oHealth = new HealthModel(null, $company);
-    $oCtrHealth = new ctrHealth($oHealth);
+//Listar afiliados
+$oPerson = new PersonModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+$oCtrPerson = new ctrPerson($oPerson);
+$familiar = $oCtrPerson->familiar_list();
+$f_lenght = count($familiar);
 
-    $oCtrHealth->create();
-    //Esta variable se usa para mostrar un mensaje de alerta
-    echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    //Vacia los variables correspondientes al área
-    $company = "";
-    $health = $oCtrHealth->health_list();
-    $h_lenght = count($health);
-  } catch (Exception $exp) {
-    echo "ERROR ....R " . $exp->getMessage() . "\n";
-  }
-}
-  //update
-if ($_POST["update"] == "update") {
-  try {
-    //setting values
-    $code = $_POST['code'];
-    $company = $_POST['health'];
-    $oHealth = new HealthModel($code, $company);
-    $oCtrHealth = new ctrHealth($oHealth);
-    if ($oCtrHealth->update()) {
-      echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    } else {
-      echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
-    }
-    header('Location: HealthView.php');
-  } catch (Exception $exp) {
-    echo "ERROR ....R " . $exp->getMessage() . "\n";
-  }
-}
-  //delete
-if ($_POST['delete'] == 'delete') {
-  try {
-
-    $code = $_POST['code'];
-    $oHealth = new HealthModel($code, null);
-    $oCtrHealth = new ctrHealth($oHealth);
-
-    if ($oCtrHealth->delete()) {
-      echo("<script>alert('¡La acción se realizó exitosamente!');</script>");
-    } else {
-      echo("<script>alert('¡La acción no se pudo realizar satisfactoriamente!');</script>");
-    }
-    $health = $oCtrHealth->health_list();
-    $h_lenght = count($health);
-
-  } catch (Exception $exp) {
-    echo "ERROR ....R " . $exp->getMessage() . "\n";
-  }
-}
 echo "
 <!DOCTYPE html>
 <html lang='es'>
@@ -84,7 +22,7 @@ echo "
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <meta name='msapplication-tap-highlight' content='no'>
   <meta name='description' content=''>
-  <title>Salud - JAC</title>
+  <title>Familiares - JAC</title>
   <link href='https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css' rel='stylesheet'>
   <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/jqvmap.css?7221760363237152919' rel='stylesheet'>
   <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/flag-icon.min.css?7221760363237152919' rel='stylesheet'>
@@ -212,7 +150,7 @@ echo "
   <header>
     <div class='navbar-fixed'>
       <nav class='navbar white'>
-        <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Salud</a>
+        <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Familiares</a>
           <ul id='nav-mobile' class='right'>
             <li class='hide-on-med-and-down'>
               <a class='dropdown-trigger waves-effect' href='#' data-target='people'>Personas</a>
@@ -251,88 +189,75 @@ echo "
     </div>
   </header>
   <main>
-    <div class='container'>
-      <br>
-      <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
-        <br>";
-  if($_POST['edit'] !== 'edit'){
-  echo "<div class='row'>
-          <form id='health' name='create' action='HealthView.php' method='POST'>
-            <div class='row'>
-              <div class='input-field col s6 m7'>
-                <i class='material-icons prefix'>healing</i>
-                <input id='icon_prefix' name='health' type='text' class='validate' autocomplete='off'>
-                <label for='icon_prefix'>Entidad de Salud</label>
-              </div>
-              <div class='input-field col s6 m5'>
-                <button class='btn waves-effect waves-light blue darken-4' type='submit' value='create' name='create'>Crear
-                  <i class='material-icons right'>add_circle</i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>";
-  }
-  if($_POST['edit'] !== 'edit'){
-    echo "<div class='row'>
-          <table class='striped bordered responsive-table centered'>
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Sistema Salud - Entidad</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>";
 
-              if ($h_lenght > 0) {
-                for ($i=0; $i < $h_lenght; $i++) { 
-                  echo "
-                  <tr>
-                    <form id='health' name='create' action='HealthView.php' method='POST'>
-                      <td>". $health[$i][1] ."</td>
-                      <td>". $health[$i][2] ."</td>
-                      <td>
-                        <input name='code' value='".$health[$i][1]."' type='text' hidden>
-                        <input name='company' value='".$health[$i][2]."' type='text' hidden>
-                        <button title='Editar' class='btn waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
+  <div class='container'>
+    <br>
+    <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
+      <br>
+      <div class='row'>
+        <div class='col s10'>
+          <h5 style='text-align:center'>Lista de Familiares</h5>
+        </div>
+        <div class='col s2'>
+          <a href='CreateAfiliadoView.php' class='btn waves-effect waves-light blue darken-4'>Crear
+            <i class='material-icons right'>add_circle</i>
+          </a>
+        </div>
+      </div>
+      <div class='row' style='height: 70vh;
+          overflow-y: scroll;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-bottom: 10px;
+          padding: 10px;'>
+        <table class='striped bordered centered responsive-table'>
+          <thead>
+            <tr>
+              <th>Identificación</th>
+              <th>Nombre Completo</th>
+              <th>Edad</th>
+              <th>Dirección</th>
+              <th>Teléfono</th>
+              <th>Familiar</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>";
+  
+            if ($f_lenght > 0) {
+            for ($i=0; $i < $f_lenght; $i++) { echo
+              "
+              <tr>
+                
+                  <td>". $familiar[$i][1] ."</td> 
+                  <td>". $familiar[$i][2] ."</td>
+                  <td>". $familiar[$i][4] ."</td>
+                  <td>". $familiar[$i][5] ."</td>
+                  <td>". $familiar[$i][6] ."</td>
+                  <td>". $familiar[$i][7] ."</td>
+                  <td style='text-align:center'>
+                  <div class='row'>
+                    <div class='col'>
+                      <form id='familiar_update' name='create' action='UpdateFamiliarView.php' method='POST'>
+                        <input name='id_update' value='".$familiar[$i][1]."' type='text' hidden>
+                        <button title='Actualizar información' class='btn btn-small waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
                           <i class='material-icons'>edit</i>
                         </button>
-                        <button title='Eliminar' class='btn waves-effect waves-light red' type='submit' value='delete' name='delete'>
+                        <button title='Eliminar usuario' class='btn btn-small waves-effect waves-light red' type='submit' value='delete' name='delete'>
                           <i class='material-icons'>delete</i>
                         </button>
-                      </td>
-                    </form>
-                  </tr>";
-                }
+                      </form>
+                    </div>
+                  </div>
+                  </td>
+              </tr>";
               }
-
-            echo "</tbody>
-          </table>
-        </div>"; 
-  }else{
-    echo "<div class='row'>
-            <form id='health' action='HealthView.php' method='POST'>
-              <div class='row'>
-                <div class='input-field col s6 m7'>
-                  <input name='code' value='".$code."' type='text' hidden>
-                  <i class='material-icons prefix'>healing</i>
-                  <input id='icon_prefix' name='health' type='text' class='validate' value='".$company."'>
-                  <label for='icon_prefix'>Entidad de Salud</label>
-                </div>
-                <div class='input-field col s6 m5'>
-                  <button class='btn waves-effect waves-light' type='submit' value='update' name='update'>Actualizar
-                    <i class='material-icons right'>edit</i>
-                  </button>
-                  <a href='HealthView.php' class='waves-effect waves-light btn grey'><i class='material-icons right'>cancel</i>Cancelar</a>
-                </div>
-              </div>
-            </form>
-          </div>";
-  }
-echo "</div>
-      <br>
+              }
+              echo "</tbody>
+        </table>
+      </div>
     </div>
+  </div>
   </main>
   <!--JavaScript at end of body for optimized loading-->
   <script type='text/javascript' src='../materialize/js/materialize.min.js'></script>
