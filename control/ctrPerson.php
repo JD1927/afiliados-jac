@@ -23,22 +23,35 @@ class ctrPerson
     $cod_thealth = $this->oPerson->getCodTHealth();
     $cod_committee = $this->oPerson->getCodCommittee();
     $cod_knowledge = $this->oPerson->getCodKnowledge();
+    $id_familiar = $this->oPerson->getIdFamiliar();
 		//---------NOS CONECTAMOS A LA BASE DE DATOS-----------------------------------------------------------
     $bd = "afiliados_jac";
     $oConnection = new ctrConnection();
     $link = $oConnection->connect('localhost', $bd, 'jac', '8uCJHYLG7q3xjeSH');
-		//--------------Se ejecuta Comando SQL-------------------------
-    $insert = "INSERT INTO PERSONA 
-    (IDENTIFICACION, TIPO_ID, N_COMPLETO, 
-    COD_TPERSONA, F_NACIMIENTO, DIRECCION, 
-    EMAIL, COD_GENERO, COD_SALUD, COD_TSALUD, 
-    COD_COMITE, COD_NACADEMICO) 
-    VALUES 
-    (" . $id . ", " . $id_type . ", '" . $fullname . "', 
-    " . $cod_tper . ", '" . $birth_date . "', '" . $address . "', 
-    '" . $email . "', " . $cod_gender . ", " . $cod_health . ", " . $cod_thealth . ",
-     " . $cod_committee . ", " . $cod_knowledge . ")";
-
+    //--------------Se ejecuta Comando SQL-------------------------
+    if ($cod_tper == 1) {
+      $insert = "INSERT INTO PERSONA 
+      (IDENTIFICACION, TIPO_ID, N_COMPLETO, 
+      COD_TPERSONA, F_NACIMIENTO, DIRECCION, 
+      EMAIL, COD_GENERO, COD_SALUD, COD_TSALUD, 
+      COD_COMITE, COD_NACADEMICO) 
+      VALUES 
+      (" . $id . ", " . $id_type . ", '" . $fullname . "', 
+      " . $cod_tper . ", '" . $birth_date . "', '" . $address . "', 
+      '" . $email . "', " . $cod_gender . ", " . $cod_health . ", " . $cod_thealth . ",
+      " . $cod_committee . ", " . $cod_knowledge . ")";
+    } else {
+      $insert ="INSERT INTO `persona` 
+      (`IDENTIFICACION`, `TIPO_ID`, `N_COMPLETO`, 
+      `COD_TPERSONA`, `F_NACIMIENTO`, `DIRECCION`, 
+      `EMAIL`, `COD_GENERO`, `COD_SALUD`, 
+      `COD_TSALUD`, `COD_NACADEMICO`, `ID_FAMILIAR`) 
+      VALUES 
+      (".$id.", ".$id_type.", '".$fullname."', 
+      " . $cod_tper . ", '" . $birth_date . "', '" . $address . "',
+      '" . $email . "', " . $cod_gender . ", " . $cod_health . ", " . $cod_thealth . ",
+      " . $cod_knowledge . ", ".$id_familiar.")";
+    }
     $recordSet = $oConnection->executeSQL($bd, $insert);
     $oConnection->close($link);
 		//--------------VERIFICAMOS SI SE REALIZO LA select--------------------------------------------------
@@ -68,19 +81,11 @@ class ctrPerson
 
             FROM PERSONA P INNER JOIN TIPO_ID TI 
             ON P.TIPO_ID = TI.CODIGO
-            INNER JOIN TIPO_PERSONA TP
-            ON P.COD_TPERSONA = TP.CODIGO
-            INNER JOIN GENERO G
-            ON P.COD_GENERO = G.CODIGO
-            INNER JOIN SALUD S 
-            ON P.COD_SALUD = S.CODIGO
-            INNER JOIN TIPO_SALUD TS
-            ON P.COD_TSALUD = TS.CODIGO
             INNER JOIN COMITE C
             ON P.COD_COMITE = C.CODIGO
             INNER JOIN N_ACADEMICO NA
             ON P.COD_NACADEMICO = NA.CODIGO
-            INNER JOIN tel_persona TELP
+            LEFT JOIN tel_persona TELP
             ON P.IDENTIFICACION = TELP.IDPERSONA
             WHERE P.COD_TPERSONA = 1
             GROUP BY P.IDENTIFICACION";

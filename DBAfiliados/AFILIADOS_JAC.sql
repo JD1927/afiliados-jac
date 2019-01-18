@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 29-12-2018 a las 16:05:52
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 5.6.38
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 18-01-2019 a las 04:22:19
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 5.6.39
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,118 +19,97 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `AFILIADOS_JAC`
+-- Base de datos: `afiliados_jac`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `COMITE`
+-- Estructura de tabla para la tabla `comite`
 --
 
-CREATE TABLE `COMITE` (
+CREATE TABLE `comite` (
   `CODIGO` int(11) NOT NULL,
   `DESCRIPCION` varchar(255) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `COMITE`
---
-
-INSERT INTO `COMITE` (`CODIGO`, `DESCRIPCION`) VALUES
-(2, 'ComitÃ© de Convivencia');
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `GENERO`
+-- Estructura de tabla para la tabla `genero`
 --
 
-CREATE TABLE `GENERO` (
+CREATE TABLE `genero` (
   `CODIGO` int(11) NOT NULL,
   `DESCRIPCION` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `GENERO`
+-- Volcado de datos para la tabla `genero`
 --
 
-INSERT INTO `GENERO` (`CODIGO`, `DESCRIPCION`) VALUES
+INSERT INTO `genero` (`CODIGO`, `DESCRIPCION`) VALUES
 (1, 'Masculino'),
 (2, 'Femenino');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `HOBBY`
+-- Estructura de tabla para la tabla `hobby`
 --
 
-CREATE TABLE `HOBBY` (
+CREATE TABLE `hobby` (
   `CODIGO` int(11) NOT NULL,
   `DESCRIPCION` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `HOBBY`
---
-
-INSERT INTO `HOBBY` (`CODIGO`, `DESCRIPCION`) VALUES
-(2, 'Deporte');
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `N_ACADEMICO`
+-- Estructura de tabla para la tabla `n_academico`
 --
 
-CREATE TABLE `N_ACADEMICO` (
+CREATE TABLE `n_academico` (
   `CODIGO` int(11) NOT NULL,
   `NIVEL` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `N_ACADEMICO`
+-- Volcado de datos para la tabla `n_academico`
 --
 
-INSERT INTO `N_ACADEMICO` (`CODIGO`, `NIVEL`) VALUES
-(4, 'Preescolar'),
-(5, 'Primaria'),
-(6, 'Secundaria'),
-(7, 'Bachiller'),
-(8, 'Media Técnica'),
-(9, 'Técnica'),
-(10, 'Tecnología'),
-(11, 'Profesional'),
-(12, 'Especialización'),
-(13, 'Maestría'),
-(14, 'Doctorado');
+INSERT INTO `n_academico` (`CODIGO`, `NIVEL`) VALUES
+(1, 'Preescolar'),
+(2, 'Primaria'),
+(3, 'Secundaria'),
+(4, 'Bachiller'),
+(5, 'Media Tecnica'),
+(6, 'Tecnica'),
+(7, 'Tecnologia'),
+(8, 'Profesional'),
+(9, 'Especializacion'),
+(10, 'Maestria'),
+(11, 'Doctorado'),
+(12, 'Ninguno');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `OCUPACION`
+-- Estructura de tabla para la tabla `ocupacion`
 --
 
-CREATE TABLE `OCUPACION` (
+CREATE TABLE `ocupacion` (
   `CODIGO` int(11) NOT NULL,
   `DESCRIPCION` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `OCUPACION`
---
-
-INSERT INTO `OCUPACION` (`CODIGO`, `DESCRIPCION`) VALUES
-(2, 'Profesor de MatemÃ¡ticas'),
-(3, 'Desarrollador de Software');
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `PERSONA`
+-- Estructura de tabla para la tabla `persona`
 --
 
-CREATE TABLE `PERSONA` (
+CREATE TABLE `persona` (
   `IDENTIFICACION` bigint(20) NOT NULL,
   `TIPO_ID` int(11) NOT NULL,
   `N_COMPLETO` varchar(255) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
@@ -146,20 +125,13 @@ CREATE TABLE `PERSONA` (
   `ID_FAMILIAR` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `PERSONA`
---
-
-INSERT INTO `PERSONA` (`IDENTIFICACION`, `TIPO_ID`, `N_COMPLETO`, `COD_TPERSONA`, `F_NACIMIENTO`, `DIRECCION`, `EMAIL`, `COD_GENERO`, `COD_SALUD`, `COD_TSALUD`, `COD_COMITE`, `COD_NACADEMICO`, `ID_FAMILIAR`) VALUES
-(1036685232, 1, 'Juan David Aguirre Cordoba', 1, '1999-04-18', 'CALLE 64D#116-74', 'juan@correo.itm.edu.co', 1, 1, 1, 2, 10, NULL);
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `PER_HOBBY`
+-- Estructura de tabla para la tabla `per_hobby`
 --
 
-CREATE TABLE `PER_HOBBY` (
+CREATE TABLE `per_hobby` (
   `IDPERSONA` bigint(20) NOT NULL,
   `HOBBY` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -167,10 +139,10 @@ CREATE TABLE `PER_HOBBY` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `PER_OCUPACION`
+-- Estructura de tabla para la tabla `per_ocupacion`
 --
 
-CREATE TABLE `PER_OCUPACION` (
+CREATE TABLE `per_ocupacion` (
   `IDPERSONA` bigint(20) NOT NULL,
   `OCUPACION` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -178,32 +150,21 @@ CREATE TABLE `PER_OCUPACION` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `SALUD`
+-- Estructura de tabla para la tabla `salud`
 --
 
-CREATE TABLE `SALUD` (
+CREATE TABLE `salud` (
   `CODIGO` int(11) NOT NULL,
   `ENTIDAD` varchar(255) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `SALUD`
---
-
-INSERT INTO `SALUD` (`CODIGO`, `ENTIDAD`) VALUES
-(1, 'Sura'),
-(4, 'Colsanitas'),
-(5, 'Coomeva'),
-(7, 'SisbÃ©n'),
-(8, 'Nueva EPS');
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `TEL_PERSONA`
+-- Estructura de tabla para la tabla `tel_persona`
 --
 
-CREATE TABLE `TEL_PERSONA` (
+CREATE TABLE `tel_persona` (
   `IDPERSONA` bigint(20) NOT NULL,
   `TELEFONO` varchar(15) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -211,59 +172,59 @@ CREATE TABLE `TEL_PERSONA` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `TIPO_ID`
+-- Estructura de tabla para la tabla `tipo_id`
 --
 
-CREATE TABLE `TIPO_ID` (
+CREATE TABLE `tipo_id` (
   `CODIGO` int(11) NOT NULL,
   `DESCRIPCION` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `TIPO_ID`
+-- Volcado de datos para la tabla `tipo_id`
 --
 
-INSERT INTO `TIPO_ID` (`CODIGO`, `DESCRIPCION`) VALUES
-(1, 'Cédula de Ciudadanía'),
+INSERT INTO `tipo_id` (`CODIGO`, `DESCRIPCION`) VALUES
+(1, 'Registro Civil'),
 (2, 'Tarjeta de Identidad'),
-(3, 'Registro Civil'),
-(4, 'Cédula de Extranjería');
+(3, 'Cedula de Ciudadania'),
+(4, 'Cedula de Extranjeria');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `TIPO_PERSONA`
+-- Estructura de tabla para la tabla `tipo_persona`
 --
 
-CREATE TABLE `TIPO_PERSONA` (
+CREATE TABLE `tipo_persona` (
   `CODIGO` int(11) NOT NULL,
   `TIPO` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `TIPO_PERSONA`
+-- Volcado de datos para la tabla `tipo_persona`
 --
 
-INSERT INTO `TIPO_PERSONA` (`CODIGO`, `TIPO`) VALUES
+INSERT INTO `tipo_persona` (`CODIGO`, `TIPO`) VALUES
 (1, 'Afiliado'),
 (2, 'Familiar');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `TIPO_SALUD`
+-- Estructura de tabla para la tabla `tipo_salud`
 --
 
-CREATE TABLE `TIPO_SALUD` (
+CREATE TABLE `tipo_salud` (
   `CODIGO` int(11) NOT NULL,
   `TIPO` varchar(100) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `TIPO_SALUD`
+-- Volcado de datos para la tabla `tipo_salud`
 --
 
-INSERT INTO `TIPO_SALUD` (`CODIGO`, `TIPO`) VALUES
+INSERT INTO `tipo_salud` (`CODIGO`, `TIPO`) VALUES
 (1, 'Cotizante'),
 (2, 'Beneficiario'),
 (3, 'Subsidiado');
@@ -273,39 +234,39 @@ INSERT INTO `TIPO_SALUD` (`CODIGO`, `TIPO`) VALUES
 --
 
 --
--- Indices de la tabla `COMITE`
+-- Indices de la tabla `comite`
 --
-ALTER TABLE `COMITE`
+ALTER TABLE `comite`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
--- Indices de la tabla `GENERO`
+-- Indices de la tabla `genero`
 --
-ALTER TABLE `GENERO`
+ALTER TABLE `genero`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
--- Indices de la tabla `HOBBY`
+-- Indices de la tabla `hobby`
 --
-ALTER TABLE `HOBBY`
+ALTER TABLE `hobby`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
--- Indices de la tabla `N_ACADEMICO`
+-- Indices de la tabla `n_academico`
 --
-ALTER TABLE `N_ACADEMICO`
+ALTER TABLE `n_academico`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
--- Indices de la tabla `OCUPACION`
+-- Indices de la tabla `ocupacion`
 --
-ALTER TABLE `OCUPACION`
+ALTER TABLE `ocupacion`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
--- Indices de la tabla `PERSONA`
+-- Indices de la tabla `persona`
 --
-ALTER TABLE `PERSONA`
+ALTER TABLE `persona`
   ADD PRIMARY KEY (`IDENTIFICACION`),
   ADD KEY `COD_COMITE` (`COD_COMITE`),
   ADD KEY `COD_TSALUD` (`COD_TSALUD`),
@@ -317,50 +278,50 @@ ALTER TABLE `PERSONA`
   ADD KEY `TIPO_ID` (`TIPO_ID`);
 
 --
--- Indices de la tabla `PER_HOBBY`
+-- Indices de la tabla `per_hobby`
 --
-ALTER TABLE `PER_HOBBY`
+ALTER TABLE `per_hobby`
   ADD PRIMARY KEY (`IDPERSONA`,`HOBBY`),
   ADD KEY `IDPERSONA` (`IDPERSONA`),
   ADD KEY `HOBBY` (`HOBBY`);
 
 --
--- Indices de la tabla `PER_OCUPACION`
+-- Indices de la tabla `per_ocupacion`
 --
-ALTER TABLE `PER_OCUPACION`
+ALTER TABLE `per_ocupacion`
   ADD PRIMARY KEY (`IDPERSONA`,`OCUPACION`),
   ADD KEY `IDPERSONA` (`IDPERSONA`),
   ADD KEY `OCUPACION` (`OCUPACION`);
 
 --
--- Indices de la tabla `SALUD`
+-- Indices de la tabla `salud`
 --
-ALTER TABLE `SALUD`
+ALTER TABLE `salud`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
--- Indices de la tabla `TEL_PERSONA`
+-- Indices de la tabla `tel_persona`
 --
-ALTER TABLE `TEL_PERSONA`
+ALTER TABLE `tel_persona`
   ADD PRIMARY KEY (`IDPERSONA`,`TELEFONO`),
   ADD KEY `IDPERSONA` (`IDPERSONA`);
 
 --
--- Indices de la tabla `TIPO_ID`
+-- Indices de la tabla `tipo_id`
 --
-ALTER TABLE `TIPO_ID`
+ALTER TABLE `tipo_id`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
--- Indices de la tabla `TIPO_PERSONA`
+-- Indices de la tabla `tipo_persona`
 --
-ALTER TABLE `TIPO_PERSONA`
+ALTER TABLE `tipo_persona`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
--- Indices de la tabla `TIPO_SALUD`
+-- Indices de la tabla `tipo_salud`
 --
-ALTER TABLE `TIPO_SALUD`
+ALTER TABLE `tipo_salud`
   ADD PRIMARY KEY (`CODIGO`);
 
 --
@@ -368,57 +329,57 @@ ALTER TABLE `TIPO_SALUD`
 --
 
 --
--- AUTO_INCREMENT de la tabla `COMITE`
+-- AUTO_INCREMENT de la tabla `comite`
 --
-ALTER TABLE `COMITE`
+ALTER TABLE `comite`
+  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `genero`
+--
+ALTER TABLE `genero`
   MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `GENERO`
+-- AUTO_INCREMENT de la tabla `hobby`
 --
-ALTER TABLE `GENERO`
-  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `HOBBY`
---
-ALTER TABLE `HOBBY`
-  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `N_ACADEMICO`
---
-ALTER TABLE `N_ACADEMICO`
-  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT de la tabla `OCUPACION`
---
-ALTER TABLE `OCUPACION`
-  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `SALUD`
---
-ALTER TABLE `SALUD`
-  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de la tabla `TIPO_ID`
---
-ALTER TABLE `TIPO_ID`
+ALTER TABLE `hobby`
   MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `TIPO_PERSONA`
+-- AUTO_INCREMENT de la tabla `n_academico`
 --
-ALTER TABLE `TIPO_PERSONA`
+ALTER TABLE `n_academico`
+  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `ocupacion`
+--
+ALTER TABLE `ocupacion`
   MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `TIPO_SALUD`
+-- AUTO_INCREMENT de la tabla `salud`
 --
-ALTER TABLE `TIPO_SALUD`
+ALTER TABLE `salud`
+  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_id`
+--
+ALTER TABLE `tipo_id`
+  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_persona`
+--
+ALTER TABLE `tipo_persona`
+  MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_salud`
+--
+ALTER TABLE `tipo_salud`
   MODIFY `CODIGO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
@@ -426,37 +387,37 @@ ALTER TABLE `TIPO_SALUD`
 --
 
 --
--- Filtros para la tabla `PERSONA`
+-- Filtros para la tabla `persona`
 --
-ALTER TABLE `PERSONA`
-  ADD CONSTRAINT `PERSONA_ibfk_2` FOREIGN KEY (`COD_COMITE`) REFERENCES `COMITE` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PERSONA_ibfk_3` FOREIGN KEY (`COD_GENERO`) REFERENCES `GENERO` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PERSONA_ibfk_4` FOREIGN KEY (`COD_NACADEMICO`) REFERENCES `N_ACADEMICO` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PERSONA_ibfk_5` FOREIGN KEY (`COD_SALUD`) REFERENCES `SALUD` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PERSONA_ibfk_6` FOREIGN KEY (`COD_TPERSONA`) REFERENCES `TIPO_PERSONA` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PERSONA_ibfk_7` FOREIGN KEY (`COD_TSALUD`) REFERENCES `TIPO_SALUD` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PERSONA_ibfk_8` FOREIGN KEY (`ID_FAMILIAR`) REFERENCES `PERSONA` (`IDENTIFICACION`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PERSONA_ibfk_9` FOREIGN KEY (`TIPO_ID`) REFERENCES `TIPO_ID` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `persona`
+  ADD CONSTRAINT `PERSONA_ibfk_2` FOREIGN KEY (`COD_COMITE`) REFERENCES `comite` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PERSONA_ibfk_3` FOREIGN KEY (`COD_GENERO`) REFERENCES `genero` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PERSONA_ibfk_4` FOREIGN KEY (`COD_NACADEMICO`) REFERENCES `n_academico` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PERSONA_ibfk_5` FOREIGN KEY (`COD_SALUD`) REFERENCES `salud` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PERSONA_ibfk_6` FOREIGN KEY (`COD_TPERSONA`) REFERENCES `tipo_persona` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PERSONA_ibfk_7` FOREIGN KEY (`COD_TSALUD`) REFERENCES `tipo_salud` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PERSONA_ibfk_8` FOREIGN KEY (`ID_FAMILIAR`) REFERENCES `persona` (`IDENTIFICACION`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PERSONA_ibfk_9` FOREIGN KEY (`TIPO_ID`) REFERENCES `tipo_id` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `PER_HOBBY`
+-- Filtros para la tabla `per_hobby`
 --
-ALTER TABLE `PER_HOBBY`
-  ADD CONSTRAINT `PER_HOBBY_ibfk_1` FOREIGN KEY (`IDPERSONA`) REFERENCES `PERSONA` (`IDENTIFICACION`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PER_HOBBY_ibfk_2` FOREIGN KEY (`HOBBY`) REFERENCES `HOBBY` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `per_hobby`
+  ADD CONSTRAINT `PER_HOBBY_ibfk_1` FOREIGN KEY (`IDPERSONA`) REFERENCES `persona` (`IDENTIFICACION`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PER_HOBBY_ibfk_2` FOREIGN KEY (`HOBBY`) REFERENCES `hobby` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `PER_OCUPACION`
+-- Filtros para la tabla `per_ocupacion`
 --
-ALTER TABLE `PER_OCUPACION`
-  ADD CONSTRAINT `PER_OCUPACION_ibfk_1` FOREIGN KEY (`IDPERSONA`) REFERENCES `PERSONA` (`IDENTIFICACION`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PER_OCUPACION_ibfk_2` FOREIGN KEY (`OCUPACION`) REFERENCES `OCUPACION` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `per_ocupacion`
+  ADD CONSTRAINT `PER_OCUPACION_ibfk_1` FOREIGN KEY (`IDPERSONA`) REFERENCES `persona` (`IDENTIFICACION`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `PER_OCUPACION_ibfk_2` FOREIGN KEY (`OCUPACION`) REFERENCES `ocupacion` (`CODIGO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `TEL_PERSONA`
+-- Filtros para la tabla `tel_persona`
 --
-ALTER TABLE `TEL_PERSONA`
-  ADD CONSTRAINT `TEL_PERSONA_ibfk_1` FOREIGN KEY (`IDPERSONA`) REFERENCES `PERSONA` (`IDENTIFICACION`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `tel_persona`
+  ADD CONSTRAINT `TEL_PERSONA_ibfk_1` FOREIGN KEY (`IDPERSONA`) REFERENCES `persona` (`IDENTIFICACION`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

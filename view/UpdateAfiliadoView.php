@@ -505,7 +505,8 @@ echo "
       <!-- REPORTERÍA -->
       <div id='reports' class='dropdown-content'>
         <ul>
-  
+          <li><a href='../control/ctrJACReport.php'>Afiliados JAC</a></li>
+          <li><a href='../control/ctrPersonReport.php'>Personas Urb. Puerta del Sol</a></li>
         </ul>
       </div>
     </header>

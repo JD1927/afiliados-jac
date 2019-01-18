@@ -3,14 +3,64 @@ error_reporting(0);
 //Incluye código 
 include("../model/PersonModel.php");
 include("../control/ctrPerson.php");
+include("../model/HealthModel.php");
+include("../control/ctrHealth.php");
+include("../model/CommitteeModel.php");
+include("../control/ctrCommittee.php");
 include("../control/ctrConnection.php");
 //Variables
 
-//Listar afiliados
+//Listar entidades de salud
+$oHealth = new HealthModel(null, null);
+$oCtrHealth = new ctrHealth($oHealth);
+$health = $oCtrHealth->health_list();
+$h_lenght = count($health);
+//Listar personas
 $oPerson = new PersonModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 $oCtrPerson = new ctrPerson($oPerson);
-$familiar = $oCtrPerson->familiar_list();
-$f_lenght = count($familiar);
+$id_personas = $oCtrPerson->id_personas();
+$id_lenght = count($id_personas);
+  //create
+if ($_POST["create"] == "create") {
+  try {
+    //setting values
+    $id = $_POST['id'];
+    $id_type = $_POST['id_type'];
+    $fullname = $_POST['fullname'];
+    $birth_date = $_POST['birth_date'];
+    $address = $_POST['address'];
+    $email = $_POST['email'];
+    $cod_gender = $_POST['cod_gender'];
+    $cod_health = $_POST['cod_health'];
+    $cod_thealth = $_POST['cod_thealth'];
+    $cod_committee = null;
+    $cod_knowledge = $_POST['cod_knowledge'];
+    $id_familiar = $_POST['id_person'];
+
+    $oPerson = new PersonModel(
+      $id,
+      $id_type,
+      $fullname,
+      2,
+      $birth_date,
+      $address,
+      $email,
+      $cod_gender,
+      $cod_health,
+      $cod_thealth,
+      $cod_committee,
+      $cod_knowledge,
+      $id_familiar
+    );
+    $oCtrPerson = new ctrPerson($oPerson);
+
+    $oCtrPerson->create();
+    //Esta variable se usa para mostrar un mensaje de alerta
+    echo ("<script>alert('¡El familiar ha sido creado exitosamente!');</script>");
+  } catch (Exception $exp) {
+    echo "ERROR ....R " . $exp->getMessage() . "\n";
+  }
+}
 
 echo "
 <!DOCTYPE html>
@@ -22,7 +72,7 @@ echo "
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <meta name='msapplication-tap-highlight' content='no'>
   <meta name='description' content=''>
-  <title>Familiares - JAC</title>
+  <title>Afiliado - JAC</title>
   <link href='https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css' rel='stylesheet'>
   <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/jqvmap.css?7221760363237152919' rel='stylesheet'>
   <link href='//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/flag-icon.min.css?7221760363237152919' rel='stylesheet'>
@@ -150,7 +200,7 @@ echo "
   <header>
     <div class='navbar-fixed'>
       <nav class='navbar white'>
-        <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Familiares</a>
+        <div class='nav-wrapper'><a href='index.html' class='brand-logo grey-text text-darken-4'>Familiar</a>
           <ul id='nav-mobile' class='right'>
             <li class='hide-on-med-and-down'>
               <a class='dropdown-trigger waves-effect' href='#' data-target='people'>Personas</a>
@@ -189,75 +239,126 @@ echo "
     </div>
   </header>
   <main>
-
-  <div class='container'>
-    <br>
-    <div class='card card-metrics card-metrics-toggle card-metrics-centered'>
+    <div class='container'>
       <br>
-      <div class='row'>
-        <div class='col s10'>
-          <h5 style='text-align:center'>Lista de Familiares</h5>
+      <div class='card card-metrics card-metrics-toggle card-metrics-centered'><br>
+      <h4 style='text-align:center'>Nuevo Familiar</h4><br>
+        <div class='row'>
+          <form id='createAfiliado' class='col s12' action='CreateAfiliadoView.php' method='POST'>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                <input id='id' name='id' type='text' class='validate' autocomplete='off'>
+                <label for='id'>Número Identificación</label>
+              </div>
+              <div class='input-field col s6'>
+                  <select name='id_type'>
+                    <option value='' disabled selected>Elije una opción</option>";
+              echo "<option value='1'>Registro Civil</option>";
+              echo "<option value='2'>Tarjeta de Identidad</option>";
+              echo "<option value='3'>Cédula de Ciudadanía</option>";
+              echo "<option value='4'>Cédula de Extranjería</option>";
+            echo "</select>
+                  <label>Tipo de Identificación</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input id='fullname' name='fullname' type='text' class='validate' autocomplete='off'>
+                <label for='fullname'>Nombre Completo</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                <input id='birth_date' name='birth_date' type='date'>
+                <label for='birth_date'>Fecha de Nacimiento</label>
+              </div>
+              <div class='input-field col s6'>
+                  <select name='cod_gender'>
+                    <option value='' disabled selected>Elije una opción</option>";
+              echo "<option value='1'>Masculino</option>";
+              echo "<option value='2'>Femenino</option>";
+            echo "</select>
+                  <label>Género</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                <input id='address' name='address' type='text' class='validate' autocomplete='off'>
+                <label for='address'>Dirección</label>
+              </div>
+              <div class='input-field col s6'>
+                <input id='email' name='email' type='email' class='validate' autocomplete='off'>
+                <label for='email'>Correo Electrónico</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                  <select name='cod_health'>
+                    <option value='' disabled selected>Elije una opción</option>";
+            for ($i = 0; $i < $h_lenght; $i++) {
+              echo "<option value='" . $health[$i][1] . "'>" . $health[$i][2] . "</option>";//Lista de Comités
+            }
+            echo "</select>
+                  <label>EPS</label>
+              </div>
+              <div class='input-field col s6'>
+                  <select name='cod_thealth'>
+                    <option value='' disabled selected>Elije una opción</option>";
+              echo "<option value='1'>Cotizante</option>";
+              echo "<option value='2'>Beneficiario</option>";
+              echo "<option value='3'>Subsidiado</option>";
+            echo "</select>
+                  <label>Tipo persona EPS</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s6'>
+                    <select name='cod_knowledge'>
+                      <option value='' disabled selected>Elije una opción</option>";
+                echo "<option value='1'>Preescolar</option>";
+                echo "<option value='2'>Primaria</option>";
+                echo "<option value='3'>Secundaria</option>";
+                echo "<option value='4'>Bachiller</option>";
+                echo "<option value='5'>Media Técnica</option>";
+                echo "<option value='6'>Técnica</option>";
+                echo "<option value='7'>Tecnología</option>";
+                echo "<option value='8'>Profesional</option>";
+                echo "<option value='9'>Especialización</option>";
+                echo "<option value='10'>Maestría</option>";
+                echo "<option value='11'>Doctorado</option>";
+                echo "<option value='12'>Ninguno</option>";
+                echo "</select>
+                    <label>Nivel Académico</label>
+              </div>
+              <div class='input-field col s6'>
+                  <select name='id_person'>
+                    <option value='' disabled selected>Elije una opción</option>";
+            for ($i = 0; $i < $id_lenght; $i++) {
+              echo "<option value='" . $id_personas[$i][1] . "'>" . $id_personas[$i][2] . "</option>";//Lista de Familiares
+            }
+            echo "</select>
+                  <label>Familiar</label>
+              </div>
+              
+            </div>
+
+            <div style='text-align: right' class='container input-field col s12'>
+              <button class='btn btn-block waves-effect waves-light btn-large blue darken-4' type='submit' value='create' name='create'>Crear
+                <i class='material-icons right'>add_circle</i>
+              </button>
+            </div>
+
+          </form>
+
         </div>
-        <div class='col s2'>
-          <a href='CreateFamiliarView.php' class='btn waves-effect waves-light blue darken-4'>Crear
-            <i class='material-icons right'>add_circle</i>
-          </a>
-        </div>
-      </div>
-      <div class='row' style='height: 70vh;
-          overflow-y: scroll;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          margin-bottom: 10px;
-          padding: 10px;'>
-        <table class='striped bordered centered responsive-table'>
-          <thead>
-            <tr>
-              <th>Identificación</th>
-              <th>Nombre Completo</th>
-              <th>Edad</th>
-              <th>Dirección</th>
-              <th>Teléfono</th>
-              <th>Familiar</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>";
-  
-            if ($f_lenght > 0) {
-            for ($i=0; $i < $f_lenght; $i++) { echo
-              "
-              <tr>
-                
-                  <td>". $familiar[$i][1] ."</td> 
-                  <td>". $familiar[$i][2] ."</td>
-                  <td>". $familiar[$i][4] ."</td>
-                  <td>". $familiar[$i][5] ."</td>
-                  <td>". $familiar[$i][6] ."</td>
-                  <td>". $familiar[$i][7] ."</td>
-                  <td style='text-align:center'>
-                  <div class='row'>
-                    <div class='col'>
-                      <form id='familiar_update' name='create' action='UpdateFamiliarView.php' method='POST'>
-                        <input name='id_update' value='".$familiar[$i][1]."' type='text' hidden>
-                        <button title='Actualizar información' class='btn btn-small waves-effect waves-light yellow' type='submit' value='edit' name='edit'>
-                          <i class='material-icons'>edit</i>
-                        </button>
-                        <button title='Eliminar usuario' class='btn btn-small waves-effect waves-light red' type='submit' value='delete' name='delete'>
-                          <i class='material-icons'>delete</i>
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                  </td>
-              </tr>";
-              }
-              }
-              echo "</tbody>
-        </table>
-      </div>
+      <br>
     </div>
-  </div>
   </main>
   <!--JavaScript at end of body for optimized loading-->
   <script type='text/javascript' src='../materialize/js/materialize.min.js'></script>
